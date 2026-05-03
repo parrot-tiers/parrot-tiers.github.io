@@ -1,22 +1,438 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Parrot Tiers Leaderboard</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bedrock Tier Testing Leaderboard</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #0a0e27;
+            color: #e0e0e0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding-bottom: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin: 30px 0 40px 0;
+        }
+
+        .header h1 {
+            font-size: 2.5em;
+            color: #d4af37;
+            text-shadow: 0 0 10px rgba(212, 175, 55, 0.5);
+            margin-bottom: 10px;
+            letter-spacing: 2px;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-bottom: 30px;
+            background: rgba(20, 20, 40, 0.8);
+            padding: 15px;
+            border-radius: 10px;
+            border: 2px solid #d4af37;
+        }
+
+        .gamemode-btn {
+            padding: 12px 20px;
+            background-color: #1a1f3a;
+            color: #e0e0e0;
+            border: 2px solid #404060;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .gamemode-btn:hover {
+            background-color: #252d4a;
+            border-color: #d4af37;
+        }
+
+        .gamemode-btn.active {
+            background-color: #d4af37;
+            color: #0a0e27;
+            border-color: #d4af37;
+        }
+
+        .leaderboard-container {
+            background: rgba(15, 18, 35, 0.9);
+            border: 2px solid #d4af37;
+            border-radius: 12px;
+            padding: 20px;
+            overflow-x: auto;
+        }
+
+        .leaderboard-title {
+            font-size: 1.5em;
+            color: #d4af37;
+            margin-bottom: 20px;
+            text-align: center;
+            font-weight: 700;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            min-width: 500px;
+        }
+
+        thead {
+            background: linear-gradient(135deg, #1a1f3a 0%, #252d4a 100%);
+            border-bottom: 3px solid #d4af37;
+        }
+
+        th {
+            padding: 15px;
+            text-align: left;
+            color: #d4af37;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+
+        td {
+            padding: 15px;
+            border-bottom: 1px solid #404060;
+            color: #e0e0e0;
+        }
+
+        tbody tr:hover {
+            background: rgba(212, 175, 55, 0.1);
+        }
+
+        .rank {
+            font-weight: 700;
+            font-size: 1.1em;
+            color: #d4af37;
+            width: 50px;
+        }
+
+        .rank.gold {
+            color: #ffd700;
+        }
+
+        .rank.silver {
+            color: #c0c0c0;
+        }
+
+        .rank.bronze {
+            color: #cd7f32;
+        }
+
+        .rank.grey {
+            color: #a0a0a0;
+        }
+
+        .medal {
+            margin-right: 5px;
+        }
+
+        .username {
+            color: #e0e0e0;
+            font-weight: 600;
+        }
+
+        .tier {
+            background: rgba(212, 175, 55, 0.2);
+            color: #d4af37;
+            padding: 5px 12px;
+            border-radius: 6px;
+            font-weight: 700;
+            display: inline-block;
+        }
+
+        /* Mobile Styles */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 1.8em;
+                margin-bottom: 15px;
+            }
+
+            .navbar {
+                gap: 5px;
+                padding: 10px;
+                margin-bottom: 20px;
+            }
+
+            .gamemode-btn {
+                padding: 10px 15px;
+                font-size: 0.9em;
+            }
+
+            .leaderboard-container {
+                padding: 15px;
+                border-radius: 8px;
+            }
+
+            .leaderboard-title {
+                font-size: 1.2em;
+                margin-bottom: 15px;
+            }
+
+            table {
+                font-size: 0.9em;
+            }
+
+            th, td {
+                padding: 10px;
+            }
+
+            .rank {
+                font-size: 1em;
+            }
+
+            .tier {
+                padding: 4px 8px;
+                font-size: 0.85em;
+            }
+
+            .medal {
+                margin-right: 3px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.4em;
+            }
+
+            .navbar {
+                gap: 3px;
+                padding: 8px;
+            }
+
+            .gamemode-btn {
+                padding: 8px 12px;
+                font-size: 0.8em;
+            }
+
+            .leaderboard-container {
+                padding: 10px;
+                border-radius: 6px;
+            }
+
+            th, td {
+                padding: 8px;
+            }
+
+            table {
+                font-size: 0.8em;
+            }
+
+            .username {
+                font-size: 0.95em;
+            }
+
+            .tier {
+                padding: 3px 6px;
+                font-size: 0.75em;
+            }
+        }
+    </style>
 </head>
 <body>
+    <div class="container">
+        <div class="header">
+            <h1>⚔️ TIER TESTING LEADERBOARD ⚔️</h1>
+        </div>
 
-<h1>🏆 Tier Leaderboard</h1>
+        <div class="navbar">
+            <button class="gamemode-btn active" onclick="switchGamemode('overall')">OVERALL</button>
+            <button class="gamemode-btn" onclick="switchGamemode('mace')">MACE</button>
+            <button class="gamemode-btn" onclick="switchGamemode('crystal')">CRYSTAL</button>
+            <button class="gamemode-btn" onclick="switchGamemode('cart')">CART</button>
+            <button class="gamemode-btn" onclick="switchGamemode('uhc')">UHC</button>
+            <button class="gamemode-btn" onclick="switchGamemode('sword')">SWORD</button>
+            <button class="gamemode-btn" onclick="switchGamemode('smp')">SMP</button>
+        </div>
 
-<div id="leaderboard"></div>
+        <div class="leaderboard-container">
+            <div class="leaderboard-title" id="gamemodeTitle">OVERALL RANKINGS</div>
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 60px;">RANK</th>
+                        <th style="width: 150px;">USERNAME</th>
+                        <th style="width: 100px;">TIER</th>
+                        <th style="width: 100px;">SCORE</th>
+                    </tr>
+                </thead>
+                <tbody id="leaderboardBody">
+                </tbody>
+            </table>
+        </div>
+    </div>
 
-<!-- Player Popup -->
-<div id="popup" class="hidden">
-  <div id="popupContent"></div>
-  <button onclick="closePopup()">Close</button>
-</div>
+    <script>
+        const leaderboardData = {
+            overall: [
+                { rank: 1, username: 'ShadowKing', tier: 'S', score: 9850 },
+                { rank: 2, username: 'PhantomGamer', tier: 'A+', score: 9320 },
+                { rank: 3, username: 'NovaStrike', tier: 'A+', score: 9100 },
+                { rank: 4, username: 'CrimsonBlade', tier: 'A', score: 8750 },
+                { rank: 5, username: 'VortexMaster', tier: 'A', score: 8420 },
+                { rank: 6, username: 'ThunderFury', tier: 'B+', score: 7890 },
+                { rank: 7, username: 'FrostByte', tier: 'B+', score: 7650 },
+                { rank: 8, username: 'InfernoX', tier: 'B', score: 7100 },
+                { rank: 9, username: 'SilentHunter', tier: 'B', score: 6850 },
+                { rank: 10, username: 'EchoNight', tier: 'C+', score: 6320 }
+            ],
+            mace: [
+                { rank: 1, username: 'CrimsonBlade', tier: 'S', score: 1850 },
+                { rank: 2, username: 'ShadowKing', tier: 'A+', score: 1720 },
+                { rank: 3, username: 'PhantomGamer', tier: 'A+', score: 1650 },
+                { rank: 4, username: 'NovaStrike', tier: 'A', score: 1420 },
+                { rank: 5, username: 'VortexMaster', tier: 'A', score: 1320 },
+                { rank: 6, username: 'ThunderFury', tier: 'B+', score: 1150 },
+                { rank: 7, username: 'FrostByte', tier: 'B+', score: 1050 },
+                { rank: 8, username: 'InfernoX', tier: 'B', score: 980 },
+                { rank: 9, username: 'SilentHunter', tier: 'B', score: 920 },
+                { rank: 10, username: 'EchoNight', tier: 'C+', score: 850 }
+            ],
+            crystal: [
+                { rank: 1, username: 'NovaStrike', tier: 'S', score: 1920 },
+                { rank: 2, username: 'PhantomGamer', tier: 'A+', score: 1780 },
+                { rank: 3, username: 'ShadowKing', tier: 'A+', score: 1650 },
+                { rank: 4, username: 'VortexMaster', tier: 'A', score: 1480 },
+                { rank: 5, username: 'CrimsonBlade', tier: 'A', score: 1350 },
+                { rank: 6, username: 'ThunderFury', tier: 'B+', score: 1200 },
+                { rank: 7, username: 'FrostByte', tier: 'B+', score: 1080 },
+                { rank: 8, username: 'InfernoX', tier: 'B', score: 950 },
+                { rank: 9, username: 'SilentHunter', tier: 'B', score: 880 },
+                { rank: 10, username: 'EchoNight', tier: 'C+', score: 750 }
+            ],
+            cart: [
+                { rank: 1, username: 'ThunderFury', tier: 'S', score: 1680 },
+                { rank: 2, username: 'InfernoX', tier: 'A+', score: 1520 },
+                { rank: 3, username: 'FrostByte', tier: 'A+', score: 1450 },
+                { rank: 4, username: 'ShadowKing', tier: 'A', score: 1340 },
+                { rank: 5, username: 'NovaStrike', tier: 'A', score: 1280 },
+                { rank: 6, username: 'SilentHunter', tier: 'B+', score: 1150 },
+                { rank: 7, username: 'VortexMaster', tier: 'B+', score: 1080 },
+                { rank: 8, username: 'CrimsonBlade', tier: 'B', score: 980 },
+                { rank: 9, username: 'PhantomGamer', tier: 'B', score: 920 },
+                { rank: 10, username: 'EchoNight', tier: 'C+', score: 820 }
+            ],
+            uhc: [
+                { rank: 1, username: 'VortexMaster', tier: 'S', score: 1750 },
+                { rank: 2, username: 'SilentHunter', tier: 'A+', score: 1620 },
+                { rank: 3, username: 'EchoNight', tier: 'A+', score: 1480 },
+                { rank: 4, username: 'ShadowKing', tier: 'A', score: 1350 },
+                { rank: 5, username: 'PhantomGamer', tier: 'A', score: 1280 },
+                { rank: 6, username: 'CrimsonBlade', tier: 'B+', score: 1150 },
+                { rank: 7, username: 'NovaStrike', tier: 'B+', score: 1050 },
+                { rank: 8, username: 'FrostByte', tier: 'B', score: 950 },
+                { rank: 9, username: 'ThunderFury', tier: 'B', score: 880 },
+                { rank: 10, username: 'InfernoX', tier: 'C+', score: 750 }
+            ],
+            sword: [
+                { rank: 1, username: 'PhantomGamer', tier: 'S', score: 1840 },
+                { rank: 2, username: 'ShadowKing', tier: 'A+', score: 1720 },
+                { rank: 3, username: 'NovaStrike', tier: 'A+', score: 1650 },
+                { rank: 4, username: 'CrimsonBlade', tier: 'A', score: 1480 },
+                { rank: 5, username: 'VortexMaster', tier: 'A', score: 1350 },
+                { rank: 6, username: 'ThunderFury', tier: 'B+', score: 1200 },
+                { rank: 7, username: 'FrostByte', tier: 'B+', score: 1080 },
+                { rank: 8, username: 'InfernoX', tier: 'B', score: 980 },
+                { rank: 9, username: 'SilentHunter', tier: 'B', score: 880 },
+                { rank: 10, username: 'EchoNight', tier: 'C+', score: 720 }
+            ],
+            smp: [
+                { rank: 1, username: 'FrostByte', tier: 'S', score: 1620 },
+                { rank: 2, username: 'InfernoX', tier: 'A+', score: 1520 },
+                { rank: 3, username: 'ThunderFury', tier: 'A+', score: 1420 },
+                { rank: 4, username: 'SilentHunter', tier: 'A', score: 1350 },
+                { rank: 5, username: 'EchoNight', tier: 'A', score: 1280 },
+                { rank: 6, username: 'NovaStrike', tier: 'B+', score: 1150 },
+                { rank: 7, username: 'ShadowKing', tier: 'B+', score: 1050 },
+                { rank: 8, username: 'PhantomGamer', tier: 'B', score: 980 },
+                { rank: 9, username: 'CrimsonBlade', tier: 'B', score: 900 },
+                { rank: 10, username: 'VortexMaster', tier: 'C+', score: 820 }
+            ]
+        };
 
-<script src="script.js"></script>
+        function switchGamemode(gamemode) {
+            // Update active button
+            document.querySelectorAll('.gamemode-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            event.target.classList.add('active');
+
+            // Update title
+            const titles = {
+                overall: 'OVERALL RANKINGS',
+                mace: 'MACE RANKINGS',
+                crystal: 'CRYSTAL RANKINGS',
+                cart: 'CART RANKINGS',
+                uhc: 'UHC RANKINGS',
+                sword: 'SWORD RANKINGS',
+                smp: 'SMP RANKINGS'
+            };
+            document.getElementById('gamemodeTitle').textContent = titles[gamemode];
+
+            // Render leaderboard
+            renderLeaderboard(leaderboardData[gamemode]);
+        }
+
+        function getRankColor(rank) {
+            if (rank === 1) return 'gold';
+            if (rank === 2) return 'silver';
+            if (rank === 3) return 'bronze';
+            return 'grey';
+        }
+
+        function getMedal(rank) {
+            if (rank === 1) return '🥇';
+            if (rank === 2) return '🥈';
+            if (rank === 3) return '🥉';
+            return '';
+        }
+
+        function renderLeaderboard(data) {
+            const tbody = document.getElementById('leaderboardBody');
+            tbody.innerHTML = '';
+
+            data.forEach(player => {
+                const rankColor = getRankColor(player.rank);
+                const medal = getMedal(player.rank);
+                
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td class="rank ${rankColor}">
+                        <span class="medal">${medal}</span>#${player.rank}
+                    </td>
+                    <td class="username">${player.username}</td>
+                    <td><span class="tier">${player.tier}</span></td>
+                    <td>${player.score}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        }
+
+        // Initial render
+        renderLeaderboard(leaderboardData.overall);
+    </script>
 </body>
 </html>
