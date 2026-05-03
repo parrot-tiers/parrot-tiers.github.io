@@ -1,164 +1,165 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bedrock Tier Testing Leaderboard</title>
-    <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Parrot Tiers - Bedrock Tier Testing Leaderboard</title>
 
-        body {
-            background-color: #0a0e27;
-            color: #e0e0e0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            padding-bottom: 20px;
-        }
+<style>
+* { margin:0; padding:0; box-sizing:border-box; }
 
-        .container { max-width: 1200px; margin: 0 auto; padding: 20px; }
+body {
+    background: radial-gradient(circle at top, #101533, #050814);
+    color:#fff;
+    font-family: 'Segoe UI', sans-serif;
+}
 
-        .header { text-align: center; margin: 30px 0 40px 0; }
+.container {
+    max-width: 1100px;
+    margin: auto;
+    padding: 20px;
+}
 
-        .logo {
-            max-width: 100%;
-            height: auto;
-            max-height: 140px;
-            object-fit: contain;
-        }
+.header {
+    text-align:center;
+    margin: 20px 0 30px;
+}
 
-        .navbar {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 30px;
-            background: rgba(20, 20, 40, 0.8);
-            padding: 15px;
-            border-radius: 10px;
-            border: 2px solid #d4af37;
-        }
+.logo {
+    max-height:120px;
+}
 
-        .gamemode-btn {
-            padding: 12px 20px;
-            background-color: #1a1f3a;
-            color: #e0e0e0;
-            border: 2px solid #404060;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 1em;
-            font-weight: 600;
-            transition: all 0.3s ease;
-        }
+.navbar {
+    display:flex;
+    justify-content:center;
+    gap:10px;
+    flex-wrap:wrap;
+    margin-bottom:25px;
+}
 
-        .gamemode-btn:hover { background-color: #252d4a; border-color: #d4af37; }
+.gamemode-btn {
+    background:#11162f;
+    border:1px solid #2a2f55;
+    color:#ccc;
+    padding:10px 16px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:0.25s;
+}
 
-        .gamemode-btn.active {
-            background-color: #d4af37;
-            color: #0a0e27;
-            border-color: #d4af37;
-        }
+.gamemode-btn:hover {
+    background:#1c2245;
+    color:#fff;
+}
 
-        .leaderboard-container {
-            background: rgba(15, 18, 35, 0.9);
-            border: 2px solid #d4af37;
-            border-radius: 12px;
-            padding: 20px;
-            overflow-x: auto;
-        }
+.gamemode-btn.active {
+    background:#d4af37;
+    color:#000;
+    border-color:#d4af37;
+}
 
-        .leaderboard-title {
-            font-size: 1.5em;
-            color: #d4af37;
-            margin-bottom: 20px;
-            text-align: center;
-            font-weight: 700;
-        }
+.card {
+    background: rgba(20,25,60,0.6);
+    border:1px solid rgba(255,255,255,0.1);
+    border-radius:12px;
+    backdrop-filter: blur(10px);
+    padding:20px;
+}
 
-        table { width: 100%; border-collapse: collapse; min-width: 500px; }
+.leaderboard-title {
+    text-align:center;
+    margin-bottom:15px;
+    font-size:1.4em;
+    color:#d4af37;
+}
 
-        thead {
-            background: linear-gradient(135deg, #1a1f3a 0%, #252d4a 100%);
-            border-bottom: 3px solid #d4af37;
-        }
+table {
+    width:100%;
+    border-collapse:collapse;
+}
 
-        th {
-            padding: 15px;
-            text-align: left;
-            color: #d4af37;
-            font-weight: 700;
-            letter-spacing: 1px;
-        }
+th, td {
+    padding:12px;
+    text-align:left;
+}
 
-        td {
-            padding: 15px;
-            border-bottom: 1px solid #404060;
-            color: #e0e0e0;
-        }
+th {
+    color:#aaa;
+    font-size:0.85em;
+}
 
-        tbody tr:hover { background: rgba(212, 175, 55, 0.1); }
+tbody tr {
+    border-top:1px solid rgba(255,255,255,0.05);
+    transition:0.2s;
+}
 
-        .rank { font-weight: 700; font-size: 1.1em; color: #d4af37; width: 50px; }
-        .rank.gold { color: #ffd700; }
-        .rank.silver { color: #c0c0c0; }
-        .rank.bronze { color: #cd7f32; }
-        .rank.grey { color: #a0a0a0; }
+tbody tr:hover {
+    background: rgba(255,255,255,0.05);
+}
 
-        .medal { margin-right: 5px; }
+.rank {
+    font-weight:bold;
+}
 
-        .username { color: #e0e0e0; font-weight: 600; }
+.gold { color:#ffd700; }
+.silver { color:#c0c0c0; }
+.bronze { color:#cd7f32; }
 
-        .tier {
-            background: rgba(212, 175, 55, 0.2);
-            color: #d4af37;
-            padding: 5px 12px;
-            border-radius: 6px;
-            font-weight: 700;
-            display: inline-block;
-        }
-    </style>
+.tier {
+    padding:4px 10px;
+    border-radius:6px;
+    background:#d4af3720;
+    color:#d4af37;
+    font-weight:bold;
+    font-size:0.9em;
+}
+</style>
 </head>
+
 <body>
 
 <div class="container">
+
 <div class="header">
-<img src="file_00000000c5347246b0f83834a91f3221.png" alt="Leaderboard Logo" class="logo">
+<img src="file_00000000c5347246b0f83834a91f3221.png" class="logo">
 </div>
 
 <div class="navbar">
-<button class="gamemode-btn active" onclick="switchGamemode('overall')">OVERALL</button>
-<button class="gamemode-btn" onclick="switchGamemode('mace')">MACE</button>
-<button class="gamemode-btn" onclick="switchGamemode('crystal')">CRYSTAL</button>
-<button class="gamemode-btn" onclick="switchGamemode('cart')">CART</button>
-<button class="gamemode-btn" onclick="switchGamemode('uhc')">UHC</button>
-<button class="gamemode-btn" onclick="switchGamemode('sword')">SWORD</button>
-<button class="gamemode-btn" onclick="switchGamemode('smp')">SMP</button>
+<button class="gamemode-btn active" onclick="switchGamemode('overall')">🏆 Overall</button>
+<button class="gamemode-btn" onclick="switchGamemode('mace')">🔨 Mace</button>
+<button class="gamemode-btn" onclick="switchGamemode('crystal')">💎 Crystal</button>
+<button class="gamemode-btn" onclick="switchGamemode('cart')">🛒 Cart</button>
+<button class="gamemode-btn" onclick="switchGamemode('uhc')">❤️ UHC</button>
+<button class="gamemode-btn" onclick="switchGamemode('sword')">🗡️ Sword</button>
+<button class="gamemode-btn" onclick="switchGamemode('smp')">🌍 SMP</button>
 </div>
 
-<div class="leaderboard-container">
-<div class="leaderboard-title" id="gamemodeTitle">OVERALL RANKINGS</div>
+<div class="card">
+<div class="leaderboard-title" id="gamemodeTitle">Overall Rankings</div>
 
 <table>
 <thead>
 <tr>
-<th>RANK</th>
-<th>USERNAME</th>
-<th>TIER</th>
-<th>SCORE</th>
+<th>#</th>
+<th>Player</th>
+<th>Tier</th>
+<th>Score</th>
 </tr>
 </thead>
 
 <tbody id="leaderboardBody"></tbody>
 </table>
 </div>
+
 </div>
 
 <script>
 const leaderboardData = {
 overall: [
 {rank:1,username:"ItsCavell",tier:"S+",score:1200},
-{rank:2,username:"Death777gt1",tier:"S",score:370},
-{rank:3,username:"ao2020oa",tier:"S",score:369},
-{rank:4,username:"SordidiParrot8318",tier:"S",score:360},
+{rank:2,username:"Death777gt1",tier:"S",score:355},
+{rank:3,username:"ao2020oa",tier:"S",score:350},
+{rank:4,username:"SordidParrot8318",tier:"S",score:350},
 {rank:5,username:"None",tier:"N/A",score:0},
 {rank:6,username:"None",tier:"N/A",score:0},
 {rank:7,username:"None",tier:"N/A",score:0},
@@ -168,8 +169,8 @@ overall: [
 ],
 mace: [
 {rank:1,username:"ItsCavell",tier:"S+",score:400},
-{rank:2,username:"Death777gt1",tier:"S",score:370},
-{rank:3,username:"ao2020oa",tier:"S",score:369},
+{rank:2,username:"Death777gt1",tier:"S",score:355},
+{rank:3,username:"ao2020oa",tier:"S",score:350},
 {rank:4,username:"None",tier:"N/A",score:0},
 {rank:5,username:"None",tier:"N/A",score:0},
 {rank:6,username:"None",tier:"N/A",score:0},
@@ -215,7 +216,7 @@ uhc: [
 {rank:10,username:"None",tier:"N/A",score:0}
 ],
 sword: [
-{rank:1,username:"SordidParrot8318",tier:"S",score:360},
+{rank:1,username:"SordidParrot8318",tier:"S",score:350},
 {rank:2,username:"None",tier:"N/A",score:0},
 {rank:3,username:"None",tier:"N/A",score:0},
 {rank:4,username:"None",tier:"N/A",score:0},
@@ -240,51 +241,44 @@ smp: [
 ]
 };
 
-function switchGamemode(gamemode) {
-    document.querySelectorAll('.gamemode-btn').forEach(btn => btn.classList.remove('active'));
+function switchGamemode(mode){
+    document.querySelectorAll('.gamemode-btn').forEach(b=>b.classList.remove('active'));
     event.target.classList.add('active');
 
-    const titles = {
-        overall:'OVERALL RANKINGS',
-        mace:'MACE RANKINGS',
-        crystal:'CRYSTAL RANKINGS',
-        cart:'CART RANKINGS',
-        uhc:'UHC RANKINGS',
-        sword:'SWORD RANKINGS',
-        smp:'SMP RANKINGS'
+    const names={
+        overall:"Overall Rankings",
+        mace:"Mace Rankings",
+        crystal:"Crystal Rankings",
+        cart:"Cart Rankings",
+        uhc:"UHC Rankings",
+        sword:"Sword Rankings",
+        smp:"SMP Rankings"
     };
 
-    document.getElementById('gamemodeTitle').textContent = titles[gamemode];
-    renderLeaderboard(leaderboardData[gamemode]);
+    document.getElementById('gamemodeTitle').textContent = names[mode];
+    renderLeaderboard(leaderboardData[mode]);
 }
 
-function getRankColor(rank){
-    if(rank===1) return 'gold';
-    if(rank===2) return 'silver';
-    if(rank===3) return 'bronze';
-    return 'grey';
-}
-
-function getMedal(rank){
-    if(rank===1) return '🥇';
-    if(rank===2) return '🥈';
-    if(rank===3) return '🥉';
-    return '';
+function getRankClass(r){
+    if(r===1) return "gold";
+    if(r===2) return "silver";
+    if(r===3) return "bronze";
+    return "";
 }
 
 function renderLeaderboard(data){
-    const tbody = document.getElementById('leaderboardBody');
-    tbody.innerHTML = '';
+    const body=document.getElementById("leaderboardBody");
+    body.innerHTML="";
 
-    data.forEach(player=>{
-        const row=document.createElement('tr');
+    data.forEach(p=>{
+        const row=document.createElement("tr");
         row.innerHTML=`
-        <td class="rank ${getRankColor(player.rank)}"><span class="medal">${getMedal(player.rank)}</span>#${player.rank}</td>
-        <td class="username">${player.username}</td>
-        <td><span class="tier">${player.tier}</span></td>
-        <td>${player.score}</td>
+        <td class="rank ${getRankClass(p.rank)}">#${p.rank}</td>
+        <td>${p.username}</td>
+        <td><span class="tier">${p.tier}</span></td>
+        <td>${p.score}</td>
         `;
-        tbody.appendChild(row);
+        body.appendChild(row);
     });
 }
 
