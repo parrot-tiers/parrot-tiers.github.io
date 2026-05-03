@@ -104,6 +104,18 @@ font-weight:bold;
 font-size:.9em
 }
 
+.fade-out{
+opacity:0;
+transform:translateY(5px);
+transition:0.15s
+}
+
+.fade-in{
+opacity:1;
+transform:translateY(0);
+transition:0.15s
+}
+
 .modal{
 position:fixed;
 top:0;
@@ -178,7 +190,7 @@ margin-top:10px
 </div>
 
 <script>
-const leaderboardData = {
+const leaderboardData={
 overall:[
 {rank:1,username:"ItsCavell",tier:"S+",score:1200},
 {rank:2,username:"Death777gt1",tier:"S",score:355},
@@ -297,7 +309,7 @@ document.getElementById("modal").style.display="flex";
 document.getElementById("modalName").textContent=p.username;
 document.getElementById("modalTier").textContent="Tier: "+p.tier;
 document.getElementById("modalScore").textContent="Score: "+p.score;
-document.getElementById("modalSkin").src="https://api.mcheads.org/body/"+p.username+"/128";
+document.getElementById("modalSkin").src="https://mc-heads.net/body/"+p.username;
 }
 
 function closeModal(){
@@ -306,6 +318,11 @@ document.getElementById("modal").style.display="none";
 
 function renderLeaderboard(data){
 const body=document.getElementById("leaderboardBody");
+
+body.classList.remove("fade-in");
+body.classList.add("fade-out");
+
+setTimeout(()=>{
 body.innerHTML="";
 
 data.forEach(p=>{
@@ -319,6 +336,11 @@ row.innerHTML=`
 `;
 body.appendChild(row);
 });
+
+body.classList.remove("fade-out");
+body.classList.add("fade-in");
+
+},120);
 }
 
 renderLeaderboard(leaderboardData.overall);
