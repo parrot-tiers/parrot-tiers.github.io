@@ -305,11 +305,27 @@ renderLeaderboard(leaderboardData[mode]);
 }
 
 function openModal(p){
-document.getElementById("modal").style.display="flex";
-document.getElementById("modalName").textContent=p.username;
-document.getElementById("modalTier").textContent="Tier: "+p.tier;
-document.getElementById("modalScore").textContent="Score: "+p.score;
-document.getElementById("modalSkin").src="https://api.mcheads.org/avatar/."+p.username+"/right/192";
+    document.getElementById("modal").style.display="flex";
+    document.getElementById("modalName").textContent=p.username;
+    document.getElementById("modalTier").textContent="Tier: "+p.tier;
+    document.getElementById("modalScore").textContent="Score: "+p.score;
+
+    const skin = document.getElementById("modalSkin");
+
+    if(p.username === "None"){
+        skin.style.display = "none";
+        return;
+    }
+
+    skin.style.display = "block";
+
+    const url = "https://api.mcheads.org/avatar/." + p.username + "/right/192";
+
+    skin.src = url;
+
+    skin.onerror = () => {
+        skin.src = "https://api.mcheads.org/avatar/steve";
+    };
 }
 
 function closeModal(){
