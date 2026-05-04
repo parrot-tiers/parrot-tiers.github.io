@@ -17,7 +17,6 @@ font-family:'Segoe UI',sans-serif
 .container{max-width:1100px;margin:auto;padding:20px}
 
 .header{text-align:center;margin:20px 0 30px}
-
 .logo{max-height:110px}
 
 .navbar{
@@ -67,9 +66,7 @@ cursor:pointer;
 transition:.2s
 }
 
-tbody tr:hover{
-background:#222
-}
+tbody tr:hover{background:#222}
 
 .rank{font-weight:bold}
 
@@ -113,9 +110,7 @@ align-items:center;
 height:140px;
 }
 
-.skin-container img{
-width:110px;
-}
+.skin-container img{width:110px}
 </style>
 </head>
 
@@ -170,7 +165,92 @@ width:110px;
 </div>
 
 <script>
-const leaderboardData = /* keep your existing data exactly the same */ {};
+const leaderboardData={
+overall:[
+{rank:1,username:"ItsCavell",tier:"S+",score:1200},
+{rank:2,username:"Death777gt1",tier:"S",score:355},
+{rank:3,username:"ao2020oa",tier:"S",score:350},
+{rank:4,username:"SordidParrot832",tier:"S",score:350},
+{rank:5,username:"lifeanddeath197",tier:"D",score:100},
+{rank:6,username:"None",tier:"N/A",score:0},
+{rank:7,username:"None",tier:"N/A",score:0},
+{rank:8,username:"None",tier:"N/A",score:0},
+{rank:9,username:"None",tier:"N/A",score:0},
+{rank:10,username:"None",tier:"N/A",score:0}
+],
+mace:[
+{rank:1,username:"ItsCavell",tier:"S+",score:400},
+{rank:2,username:"Death777gt1",tier:"S",score:355},
+{rank:3,username:"ao2020oa",tier:"S",score:350},
+{rank:4,username:"lifeanddeath197",tier:"D",score:100},
+{rank:5,username:"None",tier:"N/A",score:0},
+{rank:6,username:"None",tier:"N/A",score:0},
+{rank:7,username:"None",tier:"N/A",score:0},
+{rank:8,username:"None",tier:"N/A",score:0},
+{rank:9,username:"None",tier:"N/A",score:0},
+{rank:10,username:"None",tier:"N/A",score:0}
+],
+crystal:[
+{rank:1,username:"ItsCavell",tier:"S+",score:400},
+{rank:2,username:"None",tier:"N/A",score:0},
+{rank:3,username:"None",tier:"N/A",score:0},
+{rank:4,username:"None",tier:"N/A",score:0},
+{rank:5,username:"None",tier:"N/A",score:0},
+{rank:6,username:"None",tier:"N/A",score:0},
+{rank:7,username:"None",tier:"N/A",score:0},
+{rank:8,username:"None",tier:"N/A",score:0},
+{rank:9,username:"None",tier:"N/A",score:0},
+{rank:10,username:"None",tier:"N/A",score:0}
+],
+cart:[
+{rank:1,username:"None",tier:"N/A",score:0},
+{rank:2,username:"None",tier:"N/A",score:0},
+{rank:3,username:"None",tier:"N/A",score:0},
+{rank:4,username:"None",tier:"N/A",score:0},
+{rank:5,username:"None",tier:"N/A",score:0},
+{rank:6,username:"None",tier:"N/A",score:0},
+{rank:7,username:"None",tier:"N/A",score:0},
+{rank:8,username:"None",tier:"N/A",score:0},
+{rank:9,username:"None",tier:"N/A",score:0},
+{rank:10,username:"None",tier:"N/A",score:0}
+],
+uhc:[
+{rank:1,username:"ItsCavell",tier:"S+",score:400},
+{rank:2,username:"None",tier:"N/A",score:0},
+{rank:3,username:"None",tier:"N/A",score:0},
+{rank:4,username:"None",tier:"N/A",score:0},
+{rank:5,username:"None",tier:"N/A",score:0},
+{rank:6,username:"None",tier:"N/A",score:0},
+{rank:7,username:"None",tier:"N/A",score:0},
+{rank:8,username:"None",tier:"N/A",score:0},
+{rank:9,username:"None",tier:"N/A",score:0},
+{rank:10,username:"None",tier:"N/A",score:0}
+],
+sword:[
+{rank:1,username:"SordidParrot832",tier:"S",score:350},
+{rank:2,username:"None",tier:"N/A",score:0},
+{rank:3,username:"None",tier:"N/A",score:0},
+{rank:4,username:"None",tier:"N/A",score:0},
+{rank:5,username:"None",tier:"N/A",score:0},
+{rank:6,username:"None",tier:"N/A",score:0},
+{rank:7,username:"None",tier:"N/A",score:0},
+{rank:8,username:"None",tier:"N/A",score:0},
+{rank:9,username:"None",tier:"N/A",score:0},
+{rank:10,username:"None",tier:"N/A",score:0}
+],
+smp:[
+{rank:1,username:"None",tier:"N/A",score:0},
+{rank:2,username:"None",tier:"N/A",score:0},
+{rank:3,username:"None",tier:"N/A",score:0},
+{rank:4,username:"None",tier:"N/A",score:0},
+{rank:5,username:"None",tier:"N/A",score:0},
+{rank:6,username:"None",tier:"N/A",score:0},
+{rank:7,username:"None",tier:"N/A",score:0},
+{rank:8,username:"None",tier:"N/A",score:0},
+{rank:9,username:"None",tier:"N/A",score:0},
+{rank:10,username:"None",tier:"N/A",score:0}
+]
+};
 
 function shorten(n){return n.length>9?n.slice(0,9)+"...":n}
 
@@ -184,8 +264,7 @@ return""
 function switchGamemode(mode){
 document.querySelectorAll('.gamemode-btn').forEach(b=>b.classList.remove('active'));
 event.target.classList.add('active');
-
-document.getElementById('gamemodeTitle').textContent = mode.toUpperCase()+" RANKINGS";
+document.getElementById('gamemodeTitle').textContent=mode.toUpperCase()+" RANKINGS";
 renderLeaderboard(leaderboardData[mode]);
 }
 
