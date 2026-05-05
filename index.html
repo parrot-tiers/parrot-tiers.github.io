@@ -8,6 +8,7 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
+
 .top{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-bottom:1px solid #1f2937}
 .logo{height:40px}
 .search{background:#111827;border:1px solid #374151;border-radius:10px;padding:8px 12px;color:#fff;width:220px}
@@ -24,7 +25,6 @@ body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
 .row:hover{background:#151a22;transform:translateX(-6px) scale(1.02)}
 .head{background:#0f141b;color:#6b7280;font-size:13px}
 
-.rankBox{display:flex;align-items:center;gap:10px}
 .rankNum{font-weight:900;font-size:20px}
 .r1{background:linear-gradient(90deg,#ffd700,#b89600);color:#000;padding:8px 14px;border-radius:8px}
 .r2{background:linear-gradient(90deg,#c0c0c0,#8a8a8a);color:#000;padding:8px 14px;border-radius:8px}
@@ -101,16 +101,118 @@ body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
 
 <script>
 
-const data={
+const leaderboardData={
 overall:[
-{rank:1,username:"ItsCavell",score:1505,region:"NA",tiers:["S+","S","A+"]},
-{rank:2,username:"SordidParrot832",score:1450,region:"EU",tiers:["S+","A+"]},
-{rank:3,username:"Death777gt1",score:655,region:"NA",tiers:["S","A"]},
-{rank:4,username:"xylen0r",score:450,region:"EU",tiers:["A","B+"]},
-{rank:5,username:"ao2020oa",score:350,region:"EU",tiers:["S","B+"]}
+{rank:1,username:"ItsCavell",tier:"S+",score:1505,region:"EU"},
+{rank:2,username:"SordidParrot832",tier:"S+",score:1450,region:"AS"},
+{rank:3,username:"Death777gt1",tier:"S",score:655,region:"SA"},
+{rank:4,username:"xylen0r",tier:"A",score:450,region:"AS"},
+{rank:5,username:"ao2020oa",tier:"S",score:350,region:"EU"},
+{rank:6,username:"Godarush007",tier:"D",score:100,region:"AS"},
+{rank:7,username:"lifeanddeath197",tier:"D",score:100,region:"AS"},
+{rank:8,username:"None",tier:"N/A",score:0,region:""},
+{rank:9,username:"None",tier:"N/A",score:0,region:""},
+{rank:10,username:"None",tier:"N/A",score:0,region:""}
+],
+mace:[
+{rank:1,username:"ItsCavell",tier:"S+",score:400,region:"EU"},
+{rank:2,username:"Death777gt1",tier:"S",score:355,region:"SA"},
+{rank:3,username:"ao2020oa",tier:"S",score:350,region:"EU"},
+{rank:4,username:"xylen0r",tier:"A",score:250,region:"AS"},
+{rank:5,username:"SordidParrot832",tier:"A",score:250,region:"AS"},
+{rank:6,username:"lifeanddeath197",tier:"D",score:100,region:"AS"},
+{rank:7,username:"None",tier:"N/A",score:0,region:""},
+{rank:8,username:"None",tier:"N/A",score:0,region:""},
+{rank:9,username:"None",tier:"N/A",score:0,region:""},
+{rank:10,username:"None",tier:"N/A",score:0,region:""}
+],
+crystal:[
+{rank:1,username:"ItsCavell",tier:"S+",score:400,region:"EU"},
+{rank:2,username:"None",tier:"N/A",score:0,region:""},
+{rank:3,username:"None",tier:"N/A",score:0,region:""},
+{rank:4,username:"None",tier:"N/A",score:0,region:""},
+{rank:5,username:"None",tier:"N/A",score:0,region:""},
+{rank:6,username:"None",tier:"N/A",score:0,region:""},
+{rank:7,username:"None",tier:"N/A",score:0,region:""},
+{rank:8,username:"None",tier:"N/A",score:0,region:""},
+{rank:9,username:"None",tier:"N/A",score:0,region:""},
+{rank:10,username:"None",tier:"N/A",score:0,region:""}
+],
+cart:[
+{rank:1,username:"None",tier:"N/A",score:0,region:""},
+{rank:2,username:"None",tier:"N/A",score:0,region:""},
+{rank:3,username:"None",tier:"N/A",score:0,region:""},
+{rank:4,username:"None",tier:"N/A",score:0,region:""},
+{rank:5,username:"None",tier:"N/A",score:0,region:""},
+{rank:6,username:"None",tier:"N/A",score:0,region:""},
+{rank:7,username:"None",tier:"N/A",score:0,region:""},
+{rank:8,username:"None",tier:"N/A",score:0,region:""},
+{rank:9,username:"None",tier:"N/A",score:0,region:""},
+{rank:10,username:"None",tier:"N/A",score:0,region:""}
+],
+uhc:[
+{rank:1,username:"ItsCavell",tier:"S",score:350,region:"EU"},
+{rank:2,username:"None",tier:"N/A",score:0,region:""},
+{rank:3,username:"None",tier:"N/A",score:0,region:""},
+{rank:4,username:"None",tier:"N/A",score:0,region:""},
+{rank:5,username:"None",tier:"N/A",score:0,region:""},
+{rank:6,username:"None",tier:"N/A",score:0,region:""},
+{rank:7,username:"None",tier:"N/A",score:0,region:""},
+{rank:8,username:"None",tier:"N/A",score:0,region:""},
+{rank:9,username:"None",tier:"N/A",score:0,region:""},
+{rank:10,username:"None",tier:"N/A",score:0,region:""}
+],
+sword:[
+{rank:1,username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
+{rank:2,username:"None",tier:"N/A",score:0,region:""},
+{rank:3,username:"None",tier:"N/A",score:0,region:""},
+{rank:4,username:"None",tier:"N/A",score:0,region:""},
+{rank:5,username:"None",tier:"N/A",score:0,region:""},
+{rank:6,username:"None",tier:"N/A",score:0,region:""},
+{rank:7,username:"None",tier:"N/A",score:0,region:""},
+{rank:8,username:"None",tier:"N/A",score:0,region:""},
+{rank:9,username:"None",tier:"N/A",score:0,region:""},
+{rank:10,username:"None",tier:"N/A",score:0,region:""}
+],
+axe:[
+{rank:1,username:"SordidParrot832",tier:"S+",score:400,region:"EU"},
+{rank:2,username:"ItsCavell",tier:"S",score:355,region:"NA"},
+{rank:3,username:"None",tier:"N/A",score:0,region:""},
+{rank:4,username:"None",tier:"N/A",score:0,region:""},
+{rank:5,username:"None",tier:"N/A",score:0,region:""},
+{rank:6,username:"None",tier:"N/A",score:0,region:""},
+{rank:7,username:"None",tier:"N/A",score:0,region:""},
+{rank:8,username:"None",tier:"N/A",score:0,region:""},
+{rank:9,username:"None",tier:"N/A",score:0,region:""},
+{rank:10,username:"None",tier:"N/A",score:0,region:""}
+],
+dia:[
+{rank:1,username:"None",tier:"N/A",score:0,region:""},
+{rank:2,username:"None",tier:"N/A",score:0,region:""},
+{rank:3,username:"None",tier:"N/A",score:0,region:""},
+{rank:4,username:"None",tier:"N/A",score:0,region:""},
+{rank:5,username:"None",tier:"N/A",score:0,region:""},
+{rank:6,username:"None",tier:"N/A",score:0,region:""},
+{rank:7,username:"None",tier:"N/A",score:0,region:""},
+{rank:8,username:"None",tier:"N/A",score:0,region:""},
+{rank:9,username:"None",tier:"N/A",score:0,region:""},
+{rank:10,username:"None",tier:"N/A",score:0,region:""}
+],
+smp:[
+{rank:1,username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
+{rank:2,username:"Death777gt1",tier:"A+",score:300,region:"SA"},
+{rank:3,username:"xylen0r",tier:"B",score:200,region:"AS"},
+{rank:4,username:"Godarush007",tier:"D",score:100,region:"AS"},
+{rank:5,username:"None",tier:"N/A",score:0,region:""},
+{rank:6,username:"None",tier:"N/A",score:0,region:""},
+{rank:7,username:"None",tier:"N/A",score:0,region:""},
+{rank:8,username:"None",tier:"N/A",score:0,region:""},
+{rank:9,username:"None",tier:"N/A",score:0,region:""},
+{rank:10,username:"None",tier:"N/A",score:0,region:""}
 ]
 }
 
+  
 function getRankTitle(s){
 if(s>=1500)return"Combat Grandmaster"
 if(s>=1250)return"Combat Master"
@@ -143,7 +245,7 @@ const row=document.createElement("div")
 row.className="row"
 row.onclick=()=>openModal(p)
 row.innerHTML=`
-<div class="rankBox"><div class="${rankStyle(p.rank)} rankNum">${p.rank}.</div></div>
+<div><div class="${rankStyle(p.rank)} rankNum">${p.rank}.</div></div>
 <div class="player">
 <img src="https://api.mineatar.io/face/${p.username}">
 <div>
@@ -172,12 +274,12 @@ function closeModal(){modal.style.display="none"}
 function setMode(m,e){
 document.querySelectorAll(".mode").forEach(x=>x.classList.remove("active"))
 e.classList.add("active")
-render(data[m]||[])
+render(leaderboardData[m]||[])
 }
 
 function searchPlayer(v){
-if(!v)return render(data.overall)
-const p=data.overall.find(x=>x.username.toLowerCase()===v.toLowerCase())
+if(!v)return render(leaderboardData.overall)
+const p=leaderboardData.overall.find(x=>x.username.toLowerCase()===v.toLowerCase())
 if(p)openModal(p)
 else{
 modal.style.display="flex"
@@ -189,7 +291,7 @@ mTiers.innerHTML=""
 }
 }
 
-render(data.overall)
+render(leaderboardData.overall)
 
 </script>
 
