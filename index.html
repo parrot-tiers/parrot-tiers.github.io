@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Parrot Tiers</title>
+<link rel="icon" href="/images/favicon.ico">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
@@ -14,7 +15,7 @@ body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
 .search{background:#111827;border:1px solid #374151;border-radius:10px;padding:8px 12px;color:#fff;width:220px}
 
 .gamemodes{display:flex;gap:12px;padding:14px 20px;overflow-x:auto;border-bottom:1px solid #1f2937}
-.mode{flex:0 0 auto;background:#111827;border:1px solid #374151;padding:12px 16px;border-radius:14px;color:#9ca3af;display:flex;align-items:center;gap:6px;cursor:pointer}
+.mode{flex:0 0 auto;background:#111827;border:1px solid #374151;padding:12px 16px;border-radius:14px;color:#9ca3af;cursor:pointer}
 .mode.active{border-color:#fff;color:#fff}
 
 .subbar{display:flex;justify-content:flex-end;gap:10px;padding:12px 20px}
@@ -50,7 +51,8 @@ body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
 .grey{background:#374151;color:#9ca3af}
 
 .modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center}
-.box{background:#0f141b;border:1px solid #1f2937;border-radius:18px;padding:24px;width:330px;text-align:center}
+.box{background:#0f141b;border:1px solid #1f2937;border-radius:18px;padding:24px;width:330px;text-align:center;position:relative}
+.close{position:absolute;top:10px;right:14px;cursor:pointer;font-size:18px}
 .box img{width:100px;margin:10px 0}
 .big{font-size:22px;font-weight:800}
 .rankTitle{color:#eab308;margin:8px 0}
@@ -62,7 +64,7 @@ body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
 
 <div class="top">
 <img src="file_00000000c5347246b0f83834a91f3221.png" class="logo">
-<input class="search" placeholder="Search player..." oninput="searchPlayer(this.value)">
+<input class="search" placeholder="Search player...">
 </div>
 
 <div class="gamemodes">
@@ -78,7 +80,7 @@ body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
 </div>
 
 <div class="subbar">
-<div class="btn">ℹ Information</div>
+<div class="btn" onclick="alert('Info page coming soon')">ℹ Information</div>
 <div class="btn" onclick="window.open('https://discord.gg/Q5rnbtrZxq')">Discord</div>
 </div>
 
@@ -89,8 +91,9 @@ body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
 <div id="list"></div>
 </div>
 
-<div class="modal" id="modal" onclick="closeModal()">
-<div class="box" onclick="event.stopPropagation()">
+<div class="modal" id="modal">
+<div class="box">
+<div class="close" onclick="closeModal()">✕</div>
 <div id="mName" class="big"></div>
 <div id="mRank" class="rankTitle"></div>
 <img id="mSkin">
@@ -107,16 +110,6 @@ const modal=document.getElementById("modal")
 document.querySelector(".search").addEventListener("keydown",e=>{
 if(e.key==="Enter")searchPlayer(e.target.value)
 })
-
-function getRankTitle(s){
-if(s>=1500)return"Combat Grandmaster"
-if(s>=1250)return"Combat Master"
-if(s>=1000)return"Combat Ace"
-if(s>=500)return"Combat Specialist"
-if(s>=250)return"Combat Cadet"
-if(s>=100)return"Combat Novice"
-return"Rookie"
-}
 
 function tierClass(t){
 if(t==="S+")return"gold"
@@ -139,39 +132,24 @@ Object.keys(leaderboardData).forEach(mode=>{
 if(mode==="overall")return
 leaderboardData[mode].forEach(p=>{
 if(p.username==="None")return
-if(!map[p.username])map[p.username]={username:p.username,region:p.region,scores:[],tiers:[]}
-map[p.username].scores.push(p.score)
-map[p.username].tiers.push({mode,tier:p.tier})
+if(!map[p.username])map[p.username]={username:p.username,region:p.region,score:0,tiers:[]}
+map[p.username].score+=p.score
+map[p.username].tiers.push(p.tier)
 })
 })
-return Object.values(map).map(p=>{
-p.score=p.scores.reduce((a,b)=>a+b,0)
-return p
-}).sort((a,b)=>b.score-a.score).map((p,i)=>({...p,rank:i+1}))
+return Object.values(map).sort((a,b)=>b.score-a.score).map((p,i)=>({...p,rank:i+1}))
 }
 
 function render(mode){
 listEl.innerHTML=""
-let list
-
-if(mode==="overall"){
-list=getAllPlayers()
-}else{
-list=leaderboardData[mode]
-}
+const list=mode==="overall"?getAllPlayers():leaderboardData[mode]
 
 list.forEach(p=>{
 const row=document.createElement("div")
 row.className="row"
-row.onclick=()=>openModal(p,mode)
+row.onclick=()=>openModal(p)
 
-let tiersHTML=""
-
-if(mode==="overall"){
-tiersHTML=p.tiers.map(t=>`<div class="t ${tierClass(t.tier)}">${t.tier}</div>`).join("")
-}else{
-tiersHTML=`<div class="t ${tierClass(p.tier)}">${p.tier}</div>`
-}
+const tiers=mode==="overall"?p.tiers:[p.tier]
 
 row.innerHTML=`
 <div><div class="${rankStyle(p.rank)} rankNum">${p.rank}.</div></div>
@@ -179,44 +157,23 @@ row.innerHTML=`
 <img src="https://api.mineatar.io/face/${p.username}">
 <div>
 <div>${p.username}</div>
-<div class="sub">${getRankTitle(p.score)} (${p.score} points)</div>
+<div class="sub">${p.score} points</div>
 </div>
 </div>
 <div><span class="region ${p.region||'default'}">${p.region||'-'}</span></div>
-<div class="tiers">${tiersHTML}</div>
+<div class="tiers">${tiers.map(t=>`<div class="t ${tierClass(t)}">${t}</div>`).join("")}</div>
 `
-
 listEl.appendChild(row)
 })
 }
 
-function openModal(p,mode){
+function openModal(p){
 modal.style.display="flex"
-
-let allTiers=[]
-
-if(mode==="overall"){
-allTiers=p.tiers
-}else{
-Object.keys(leaderboardData).forEach(m=>{
-if(m==="overall")return
-const found=leaderboardData[m].find(x=>x.username===p.username)
-if(found && found.username!=="None"){
-allTiers.push({mode:m,tier:found.tier})
-}
-})
-}
-
-document.querySelector(".box").innerHTML=`
-<div style="text-align:right;cursor:pointer;font-size:18px" onclick="closeModal()">✕</div>
-<div id="mName" class="big">${p.username}</div>
-<div class="rankTitle">${getRankTitle(p.score)}</div>
-<img src="https://api.mineatar.io/face/${p.username}">
-<div>#${p.rank} Overall (${p.score} points)</div>
-<div class="tierRow">
-${allTiers.map(t=>`<div class="t ${tierClass(t.tier)}">${t.tier}</div>`).join("")}
-</div>
-`
+mName.textContent=p.username
+mRank.textContent=p.score+" points"
+mSkin.src=`https://api.mineatar.io/face/${p.username}`
+mPos.textContent="#"+p.rank+" Overall"
+mTiers.innerHTML=(p.tiers||[p.tier]).map(t=>`<div class="t ${tierClass(t)}">${t}</div>`).join("")
 }
 
 function closeModal(){
@@ -231,20 +188,16 @@ render(m)
 
 function searchPlayer(name){
 if(!name)return
-
 const players=getAllPlayers()
-const found=players.find(p=>p.username.toLowerCase()===name.toLowerCase())
-
-if(found){
-openModal(found,"overall")
-}else{
+const p=players.find(x=>x.username.toLowerCase()===name.toLowerCase())
+if(p)openModal(p)
+else{
 modal.style.display="flex"
-document.querySelector(".box").innerHTML=`
-<div style="text-align:right;cursor:pointer;font-size:18px" onclick="closeModal()">✕</div>
-<div class="big">${name}</div>
-<div class="rankTitle">Unranked</div>
-<img src="https://api.mineatar.io/face/${name}">
-`
+mName.textContent=name
+mRank.textContent="Unranked"
+mSkin.src=`https://api.mineatar.io/face/${name}`
+mPos.textContent=""
+mTiers.innerHTML=""
 }
 }
 
