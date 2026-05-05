@@ -9,141 +9,43 @@
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
-body{
-background:#0c0f14;
-color:#d1d5db;
-font-family:Inter,Segoe UI
-}
+body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
 
-.top{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:14px 18px;
-border-bottom:1px solid #1f2937
-}
+.top{display:flex;justify-content:space-between;align-items:center;padding:12px 16px;border-bottom:1px solid #1f2937}
+.logo{height:38px}
 
-.logo{height:40px}
+.search{background:#111827;border:1px solid #374151;border-radius:10px;padding:8px;color:#fff;width:180px}
 
-.gamemodes{
-display:flex;
-gap:10px;
-padding:12px 14px;
-overflow-x:auto;
-border-bottom:1px solid #1f2937
-}
+.gamemodes{display:flex;gap:10px;padding:12px;overflow-x:auto;border-bottom:1px solid #1f2937}
 
-.mode{
-flex:0 0 auto;
-background:#111827;
-border:1px solid #374151;
-padding:10px 14px;
-border-radius:12px;
-color:#9ca3af;
-cursor:pointer
-}
+.mode{flex:0 0 auto;background:#111827;border:1px solid #374151;padding:10px 14px;border-radius:12px;color:#9ca3af;cursor:pointer}
+.mode.active{border-color:#fff;color:#fff}
 
-.mode.active{
-border-color:#fff;
-color:#fff
-}
+.board{margin:14px;border-radius:16px;overflow:hidden;border:1px solid #1f2937}
 
-.board{
-margin:14px;
-border-radius:16px;
-overflow:hidden;
-border:1px solid #1f2937
-}
+.row{display:grid;grid-template-columns:1fr 100px;padding:12px;border-top:1px solid #1f2937;align-items:center;position:relative}
+.row:hover{background:#151a22}
 
-.row{
-display:grid;
-grid-template-columns:110px 1fr 90px 1fr;
-align-items:center;
-padding:12px;
-border-top:1px solid #1f2937;
-transition:.2s
-}
+.left{display:flex;align-items:center;gap:10px}
 
-.row:hover{
-background:#151a22;
-transform:scale(1.01)
-}
+.skin{width:48px;height:48px;border-radius:8px}
 
-.head{
-background:#0f141b;
-color:#6b7280;
-font-size:13px
-}
+.playerName{font-weight:700}
+.sub{font-size:12px;color:#9ca3af}
 
-.rankWrap{
-position:relative;
-width:90px;
-height:60px;
-display:flex;
-align-items:center;
-justify-content:center;
-border-radius:10px;
-overflow:hidden
-}
-
-.r1{background:linear-gradient(135deg,#ffd700,#b89600)}
-.r2{background:linear-gradient(135deg,#c0c0c0,#8a8a8a)}
-.r3{background:linear-gradient(135deg,#cd7f32,#8b5a2b)}
-
-.rankNum{
-position:absolute;
-left:6px;
-top:4px;
-font-weight:900;
-font-size:18px;
-color:#000
-}
-
-.skin{
-width:60px;
-height:60px;
-object-fit:contain
-}
-
-.player{
-display:flex;
-align-items:center;
-gap:10px
-}
-
-.playerName{
-font-weight:600
-}
-
-.sub{
-font-size:12px;
-color:#9ca3af
-}
-
-.region{
-padding:5px 8px;
-border-radius:8px;
-font-weight:700;
-font-size:12px
-}
-
-.NA{background:#3b1f25;color:#ff7a8a}
-.EU{background:#1f3b2b;color:#6bff9c}
-.AS{background:#3b2b1f;color:#ffb86b}
-.default{background:#2a2f3a;color:#aaa}
-
-.tiers{
-display:flex;
-gap:5px;
-flex-wrap:wrap
-}
+.tiers{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
 
 .t{
 padding:4px 6px;
 border-radius:6px;
 font-size:11px;
-font-weight:700
+font-weight:700;
+display:flex;
+flex-direction:column;
+align-items:center
 }
+
+.t span{font-size:9px;opacity:.7}
 
 .gold{background:#ffd700;color:#000}
 .gold2{background:#f0c000;color:#000}
@@ -151,55 +53,35 @@ font-weight:700
 .bronze{background:#cd7f32;color:#fff}
 .grey{background:#374151;color:#9ca3af}
 
-.modal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.85);
-display:none;
-align-items:center;
-justify-content:center
-}
-
-.box{
-background:#0f141b;
-border:1px solid #1f2937;
-border-radius:16px;
-padding:20px;
-width:320px;
-text-align:center
-}
-
-.box img{
-width:120px;
-margin:10px auto;
-display:block
-}
-
-.big{
-font-size:20px;
-font-weight:800
-}
-
-.rankTitle{
-color:#eab308;
-margin:6px 0
-}
-
-.tierRow{
+.rankBox{
+position:absolute;
+right:0;
+top:0;
+height:100%;
+width:90px;
 display:flex;
-flex-wrap:wrap;
+align-items:center;
 justify-content:center;
-gap:6px;
-margin-top:10px
+clip-path:polygon(25% 0,100% 0,100% 100%,0% 100%);
+font-weight:900;
+font-size:18px
 }
 
-@media(max-width:600px){
-.row{
-grid-template-columns:90px 1fr
-}
-.region,.tiers{
-display:none
-}
+.r1{background:linear-gradient(135deg,#ffd700,#b89600);color:#000}
+.r2{background:linear-gradient(135deg,#c0c0c0,#8a8a8a);color:#000}
+.r3{background:linear-gradient(135deg,#cd7f32,#8b5a2b);color:#fff}
+.rX{background:#111827;color:#9ca3af}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.85);display:none;align-items:center;justify-content:center}
+
+.box{background:#0f141b;border:1px solid #1f2937;border-radius:16px;padding:20px;width:320px;text-align:center}
+.box img{width:120px;margin:10px auto;display:block}
+.big{font-size:20px;font-weight:800}
+
+.tierRow{display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin-top:10px}
+
+@media(min-width:700px){
+.row{grid-template-columns:1fr 1fr 120px}
 }
 </style>
 </head>
@@ -208,6 +90,7 @@ display:none
 
 <div class="top">
 <img src="file_00000000c5347246b0f83834a91f3221.png" class="logo">
+<input class="search" placeholder="Search..." id="search">
 </div>
 
 <div class="gamemodes">
@@ -221,9 +104,6 @@ display:none
 </div>
 
 <div class="board">
-<div class="row head">
-<div>#</div><div>Player</div><div>Region</div><div>Tiers</div>
-</div>
 <div id="list"></div>
 </div>
 
@@ -234,6 +114,7 @@ display:none
 <script>
 const listEl=document.getElementById("list")
 const modal=document.getElementById("modal")
+const search=document.getElementById("search")
 
 function tierClass(t){
 if(t==="S+")return"gold"
@@ -247,64 +128,85 @@ function rankStyle(r){
 if(r===1)return"r1"
 if(r===2)return"r2"
 if(r===3)return"r3"
-return""
+return"rX"
 }
 
+const modes=["mace","crystal","cart","uhc","sword","smp"]
+
 const leaderboardData={
-overall:[
-{rank:1,username:"ItsCavell",tier:"S+",score:1200,region:"EU"},
-{rank:2,username:"Death777gt1",tier:"S",score:355,region:"SA"},
-{rank:3,username:"ao2020oa",tier:"S",score:350,region:"EU"},
-{rank:4,username:"SordidParrot832",tier:"S",score:350,region:"AS"},
-{rank:5,username:"lifeanddeath197",tier:"D",score:100,region:"AS"},
-...Array.from({length:5},(_,i)=>({rank:i+6,username:"None",tier:"N/A",score:0,region:""}))
-],
 mace:[
-{rank:1,username:"ItsCavell",tier:"S+",score:400,region:"EU"},
-{rank:2,username:"Death777gt1",tier:"S",score:355,region:"SA"},
-{rank:3,username:"ao2020oa",tier:"S",score:350,region:"EU"},
-{rank:4,username:"lifeanddeath197",tier:"D",score:100,region:"AS"},
-...Array.from({length:6},(_,i)=>({rank:i+5,username:"None",tier:"N/A",score:0,region:""}))
+{rank:1,username:"ItsCavell",tier:"S+",score:400},
+{rank:2,username:"Death777gt1",tier:"S",score:355},
+{rank:3,username:"ao2020oa",tier:"S",score:350},
+{rank:4,username:"lifeanddeath197",tier:"D",score:100},
+...Array.from({length:11},(_,i)=>({rank:i+5,username:"None",tier:"N/A",score:0}))
 ],
-crystal:[{rank:1,username:"ItsCavell",tier:"S+",score:400,region:"EU"},
-...Array.from({length:9},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0,region:""}))
+crystal:[
+{rank:1,username:"ItsCavell",tier:"S+",score:400},
+...Array.from({length:14},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0}))
 ],
-cart:Array.from({length:10},(_,i)=>({rank:i+1,username:"None",tier:"N/A",score:0,region:""})),
-uhc:[{rank:1,username:"ItsCavell",tier:"S+",score:400,region:"EU"},
-...Array.from({length:9},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0,region:""}))
+cart:Array.from({length:15},(_,i)=>({rank:i+1,username:"None",tier:"N/A",score:0})),
+uhc:[
+{rank:1,username:"ItsCavell",tier:"S+",score:400},
+...Array.from({length:14},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0}))
 ],
-sword:[{rank:1,username:"SordidParrot832",tier:"S",score:350,region:"AS"},
-...Array.from({length:9},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0,region:""}))
+sword:[
+{rank:1,username:"SordidParrot832",tier:"S",score:350},
+...Array.from({length:14},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0}))
 ],
-smp:Array.from({length:10},(_,i)=>({rank:i+1,username:"None",tier:"N/A",score:0,region:""}))
+smp:Array.from({length:15},(_,i)=>({rank:i+1,username:"None",tier:"N/A",score:0}))
+}
+
+function getOverall(){
+const map={}
+modes.forEach(m=>{
+leaderboardData[m].forEach(p=>{
+if(p.username==="None")return
+if(!map[p.username])map[p.username]={username:p.username,score:0,tiers:[]}
+map[p.username].score+=p.score
+map[p.username].tiers.push({mode:m,tier:p.tier})
+})
+})
+return Object.values(map).sort((a,b)=>b.score-a.score).map((p,i)=>({...p,rank:i+1}))
 }
 
 function render(mode){
 listEl.innerHTML=""
-leaderboardData[mode].forEach(p=>{
+let list=mode==="overall"?getOverall():leaderboardData[mode]
+
+list.forEach(p=>{
 const row=document.createElement("div")
 row.className="row"
 row.onclick=()=>openModal(p,mode)
 
 const skin=p.username==="None"
-?"https://api.mcheads.org/avatar/steve"
-:"https://api.mcheads.org/avatar/."+p.username+"/right/128"
+?"https://mc-heads.net/avatar/steve"
+:`https://mc-heads.net/avatar/${p.username}/100`
+
+let tiersHTML=""
+
+if(mode==="overall"){
+tiersHTML=p.tiers.map(t=>`
+<div class="t ${tierClass(t.tier)}">
+${t.tier}
+<span>${t.mode}</span>
+</div>
+`).join("")
+}else{
+tiersHTML=`<div class="t ${tierClass(p.tier)}">${p.tier}</div>`
+}
 
 row.innerHTML=`
-<div>
-<div class="rankWrap ${rankStyle(p.rank)}">
-<div class="rankNum">${p.rank}</div>
-<img class="skin" src="${skin}">
-</div>
-</div>
-<div class="player">
+<div class="left">
+<img class="skin" src="${skin}" onerror="this.src='https://mc-heads.net/avatar/steve'">
 <div>
 <div class="playerName">${p.username}</div>
-<div class="sub">${p.score} points</div>
+<div class="sub">${p.score} pts</div>
+<div class="tiers">${tiersHTML}</div>
 </div>
 </div>
-<div><span class="region ${p.region||'default'}">${p.region||'-'}</span></div>
-<div class="tiers"><div class="t ${tierClass(p.tier)}">${p.tier}</div></div>
+
+<div class="rankBox ${rankStyle(p.rank)}">${p.rank}</div>
 `
 listEl.appendChild(row)
 })
@@ -316,13 +218,7 @@ modal.style.display="flex"
 let tiersHTML=""
 
 if(mode==="overall"){
-Object.keys(leaderboardData).forEach(m=>{
-leaderboardData[m].forEach(x=>{
-if(x.username===p.username){
-tiersHTML+=`<div class="t ${tierClass(x.tier)}">${m}: ${x.tier}</div>`
-}
-})
-})
+tiersHTML=p.tiers.map(t=>`<div class="t ${tierClass(t.tier)}">${t.mode}: ${t.tier}</div>`).join("")
 }else{
 tiersHTML=`<div class="t ${tierClass(p.tier)}">${p.tier}</div>`
 }
@@ -330,15 +226,21 @@ tiersHTML=`<div class="t ${tierClass(p.tier)}">${p.tier}</div>`
 modalBox.innerHTML=`
 <div style="text-align:right;cursor:pointer" onclick="closeModal()">✕</div>
 <div class="big">${p.username}</div>
-<img src="${p.username==="None"?"https://api.mcheads.org/avatar/steve":"https://api.mcheads.org/avatar/."+p.username+"/right/192"}">
-<div>#${p.rank} (${p.score} pts)</div>
+<img src="https://mc-heads.net/avatar/${p.username}/150">
+<div>#${p.rank} • ${p.score} pts</div>
 <div class="tierRow">${tiersHTML}</div>
 `
 }
 
-function closeModal(){
-modal.style.display="none"
+function closeModal(){modal.style.display="none"}
+
+search.addEventListener("keydown",e=>{
+if(e.key==="Enter"){
+const name=search.value.toLowerCase()
+const p=getOverall().find(x=>x.username.toLowerCase()===name)
+if(p)openModal(p,"overall")
 }
+})
 
 function setMode(m,e){
 document.querySelectorAll(".mode").forEach(x=>x.classList.remove("active"))
