@@ -38,6 +38,7 @@ body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
 .region{padding:5px 9px;border-radius:8px;font-weight:700;font-size:12px}
 .NA{background:#3b1f25;color:#ff7a8a}
 .EU{background:#1f3b2b;color:#6bff9c}
+.SA{background:#1f2a3b;color:#7ab7ff}
 .AS{background:#3b2b1f;color:#ffb86b}
 .default{background:#2a2f3a;color:#aaa}
 
@@ -53,8 +54,6 @@ body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
 .box{background:#0f141b;border:1px solid #1f2937;border-radius:18px;padding:24px;width:330px;text-align:center}
 .box img{width:100px;margin:10px 0}
 .big{font-size:22px;font-weight:800}
-.rankTitle{color:#eab308;margin:8px 0}
-.tierRow{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:10px}
 </style>
 </head>
 
@@ -94,7 +93,6 @@ body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
 </div>
 
 <script>
-
 const listEl=document.getElementById("list")
 const modal=document.getElementById("modal")
 const modalBox=document.getElementById("modalBox")
@@ -107,8 +105,7 @@ if(e.key==="Enter")searchPlayer(search.value)
 function tierClass(t){
 if(t==="S+")return"gold"
 if(t==="S")return"gold2"
-if(t==="A+")return"s
-ilver"
+if(t==="A+")return"silver"
 if(t==="A"||t==="B+")return"bronze"
 return"grey"
 }
@@ -120,10 +117,49 @@ if(r===3)return"r3"
 return""
 }
 
-/* YOUR DATA EXACTLY */
-const leaderboardData = { /* (unchanged, same as you pasted) */ }
+const leaderboardData={
+mace:[
+{rank:1,username:"ItsCavell",tier:"S+",score:400,region:"EU"},
+{rank:2,username:"Death777gt1",tier:"S",score:355,region:"SA"},
+{rank:3,username:"ao2020oa",tier:"S",score:350,region:"EU"},
+{rank:4,username:"xylen0r",tier:"A",score:250,region:"AS"},
+{rank:5,username:"SordidParrot832",tier:"A",score:250,region:"AS"},
+{rank:6,username:"lifeanddeath197",tier:"D",score:100,region:"AS"},
+...Array.from({length:14},(_,i)=>({rank:i+7,username:"None",tier:"N/A",score:0,region:""}))
+],
+crystal:[
+{rank:1,username:"ItsCavell",tier:"S+",score:400,region:"EU"},
+...Array.from({length:19},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0,region:""}))
+],
+cart:Array.from({length:20},(_,i)=>({rank:i+1,username:"None",tier:"N/A",score:0,region:""})),
+uhc:[
+{rank:1,username:"ItsCavell",tier:"S",score:350,region:"EU"},
+{rank:2,username:"SordidParrot832",tier:"B",score:200,region:"AS"},
+...Array.from({length:18},(_,i)=>({rank:i+3,username:"None",tier:"N/A",score:0,region:""}))
+],
+sword:[
+{rank:1,username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
+...Array.from({length:19},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0,region:""}))
+],
+axe:[
+{rank:1,username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
+{rank:2,username:"ItsCavell",tier:"B",score:200,region:"EU"},
+...Array.from({length:18},(_,i)=>({rank:i+3,username:"None",tier:"N/A",score:0,region:""}))
+],
+dia:[
+{rank:1,username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
+...Array.from({length:19},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0,region:""}))
+],
+smp:[
+{rank:1,username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
+{rank:2,username:"ItsCavell",tier:"S",score:350,region:"EU"},
+{rank:3,username:"Death777gt1",tier:"A+",score:300,region:"SA"},
+{rank:4,username:"xylen0r",tier:"B",score:200,region:"AS"},
+{rank:5,username:"Godarush007",tier:"D",score:100,region:"AS"},
+...Array.from({length:15},(_,i)=>({rank:i+6,username:"None",tier:"N/A",score:0,region:""}))
+]
+}
 
-/* AUTO OVERALL */
 function getAllPlayers(){
 const map={}
 Object.keys(leaderboardData).forEach(mode=>{
@@ -146,7 +182,7 @@ if(p.username==="None")return
 
 const row=document.createElement("div")
 row.className="row"
-row.onclick=()=>openModal(p,mode)
+row.onclick=()=>openModal(p)
 
 const tiers=mode==="overall"
 ?p.tiers.map(t=>`<div class="t ${tierClass(t.tier)}">${t.tier}</div>`).join("")
@@ -164,19 +200,17 @@ row.innerHTML=`
 <div><span class="region ${p.region||'default'}">${p.region||'-'}</span></div>
 <div class="tiers">${tiers}</div>
 `
-
 listEl.appendChild(row)
 })
 }
 
-function openModal(p,mode){
+function openModal(p){
 modal.style.display="flex"
-
 modalBox.innerHTML=`
 <div style="text-align:right;cursor:pointer" onclick="closeModal()">✕</div>
 <div class="big">${p.username}</div>
 <img src="https://visage.surgeplay.com/full/150/${p.username}">
-<div>#${p.rank} Overall (${p.score} points)</div>
+<div>#${p.rank} (${p.score} points)</div>
 `
 }
 
@@ -192,11 +226,10 @@ function searchPlayer(name){
 if(!name)return
 const players=getAllPlayers()
 const found=players.find(p=>p.username.toLowerCase()===name.toLowerCase())
-if(found)openModal(found,"overall")
+if(found)openModal(found)
 }
 
 render("overall")
-
 </script>
 
 </body>
