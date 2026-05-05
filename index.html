@@ -3,338 +3,194 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Parrot Tiers - Leaderboard</title>
-<link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+<title>Parrot Tiers</title>
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
+.top{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-bottom:1px solid #1f2937}
+.logo{height:40px}
+.search{background:#111827;border:1px solid #374151;border-radius:10px;padding:8px 12px;color:#fff;width:220px}
 
-body{
-background:linear-gradient(#1c1c1c,#0f0f0f);
-color:#e5e5e5;
-font-family:'Segoe UI',sans-serif
-}
+.gamemodes{display:flex;gap:12px;padding:14px 20px;overflow-x:auto;border-bottom:1px solid #1f2937}
+.mode{flex:0 0 auto;background:#111827;border:1px solid #374151;padding:12px 16px;border-radius:14px;color:#9ca3af;display:flex;align-items:center;gap:6px;cursor:pointer}
+.mode.active{border-color:#fff;color:#fff}
 
-.container{max-width:1100px;margin:auto;padding:20px}
+.subbar{display:flex;justify-content:flex-end;gap:10px;padding:12px 20px}
+.btn{background:#111827;border:1px solid #374151;padding:8px 12px;border-radius:10px;color:#cbd5e1;cursor:pointer}
 
-.header{text-align:center;margin:20px 0 30px}
-.logo{max-height:110px}
+.board{margin:20px;border-radius:16px;overflow:hidden;border:1px solid #1f2937}
+.row{display:grid;grid-template-columns:90px 1.6fr 120px 1fr;align-items:center;padding:14px 16px;border-top:1px solid #1f2937;transition:.25s}
+.row:hover{background:#151a22;transform:translateX(-6px) scale(1.02)}
+.head{background:#0f141b;color:#6b7280;font-size:13px}
 
-.navbar{
-display:flex;
-gap:10px;
-overflow-x:auto;
-margin-bottom:25px
-}
+.rankBox{display:flex;align-items:center;gap:10px}
+.rankNum{font-weight:900;font-size:20px}
+.r1{background:linear-gradient(90deg,#ffd700,#b89600);color:#000;padding:8px 14px;border-radius:8px}
+.r2{background:linear-gradient(90deg,#c0c0c0,#8a8a8a);color:#000;padding:8px 14px;border-radius:8px}
+.r3{background:linear-gradient(90deg,#cd7f32,#8b5a2b);color:#fff;padding:8px 14px;border-radius:8px}
 
-.gamemode-btn{
-flex:0 0 auto;
-background:#2a2a2a;
-border:1px solid #3a3a3a;
-color:#bbb;
-padding:10px 16px;
-border-radius:8px;
-cursor:pointer
-}
+.player{display:flex;align-items:center;gap:12px}
+.player img{width:40px;border-radius:8px}
+.sub{font-size:12px;color:#9ca3af}
 
-.gamemode-btn.active{
-background:#e0b84c;
-color:#000;
-border-color:#e0b84c
-}
+.region{padding:5px 9px;border-radius:8px;font-weight:700;font-size:12px}
+.NA{background:#3b1f25;color:#ff7a8a}
+.EU{background:#1f3b2b;color:#6bff9c}
+.AS{background:#3b2b1f;color:#ffb86b}
+.AU{background:#3b2b3a;color:#ff9cff}
+.default{background:#2a2f3a;color:#aaa}
 
-.card{
-background:#181818;
-border:1px solid #2a2a2a;
-border-radius:12px;
-padding:20px
-}
+.tiers{display:flex;gap:6px}
+.t{width:26px;height:26px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:11px;font-weight:700}
+.gold{background:#ffd700;color:#000}
+.gold2{background:#f0c000;color:#000}
+.silver{background:#c0c0c0;color:#000}
+.bronze{background:#cd7f32;color:#fff}
+.grey{background:#374151;color:#9ca3af}
 
-.leaderboard-title{
-text-align:center;
-margin-bottom:15px;
-font-size:1.4em;
-color:#e0b84c
-}
-
-table{width:100%;border-collapse:collapse}
-
-th,td{padding:12px;text-align:left}
-
-tbody tr{
-border-top:1px solid #2a2a2a;
-cursor:pointer;
-transition:.2s
-}
-
-tbody tr:hover{background:#222}
-
-.rank{font-weight:bold}
-
-.top1{color:#ffd700;font-weight:900}
-.top2{color:#c0c0c0;font-weight:800}
-.top3{color:#cd7f32;font-weight:800}
-
-.tier{
-padding:4px 10px;
-border-radius:6px;
-background:#e0b84c22;
-color:#e0b84c;
-font-weight:bold;
-font-size:.9em
-}
-
-.modal{
-position:fixed;
-top:0;
-left:0;
-width:100%;
-height:100%;
-background:rgba(0,0,0,.7);
-display:none;
-align-items:center;
-justify-content:center
-}
-
-.modal-box{
-background:#1a1a1a;
-padding:20px;
-border-radius:12px;
-text-align:center;
-width:280px
-}
-
-.skin-container{
-display:flex;
-justify-content:center;
-align-items:center;
-height:140px;
-}
-
-.skin-container img{width:110px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center}
+.box{background:#0f141b;border:1px solid #1f2937;border-radius:18px;padding:24px;width:330px;text-align:center}
+.box img{width:100px;margin:10px 0}
+.big{font-size:22px;font-weight:800}
+.rankTitle{color:#eab308;margin:8px 0}
+.tierRow{display:flex;justify-content:center;gap:6px;margin-top:10px}
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
-<div class="header">
+<div class="top">
 <img src="file_00000000c5347246b0f83834a91f3221.png" class="logo">
+<input class="search" placeholder="Search player..." oninput="searchPlayer(this.value)">
 </div>
 
-<div class="navbar">
-<button class="gamemode-btn active" onclick="switchGamemode('overall')">🏆 Overall</button>
-<button class="gamemode-btn" onclick="switchGamemode('mace')">🔨 Mace</button>
-<button class="gamemode-btn" onclick="switchGamemode('crystal')">💎 Crystal</button>
-<button class="gamemode-btn" onclick="switchGamemode('cart')">🛒 Cart</button>
-<button class="gamemode-btn" onclick="switchGamemode('uhc')">❤️ UHC</button>
-<button class="gamemode-btn" onclick="switchGamemode('sword')">🗡️ Sword</button>
-<button class="gamemode-btn" onclick="switchGamemode('smp')">🌍 SMP</button>
-<button class="gamemode-btn" onclick="switchGamemode('axe')">🪓 AXE</button>
-<button class="gamemode-btn" onclick="switchGamemode('dia')">🧪 Dia Pot</button>
-<button href="https://parrot-tiers.github.io/info" class="gamemode-btn">📜 INFO</button>
+<div class="gamemodes">
+<div class="mode active" onclick="setMode('overall',this)">🏆 Overall</div>
+<div class="mode" onclick="setMode('mace',this)">🔨 Mace</div>
+<div class="mode" onclick="setMode('crystal',this)">💎 Crystal</div>
+<div class="mode" onclick="setMode('cart',this)">🛒 Cart</div>
+<div class="mode" onclick="setMode('uhc',this)">❤️ UHC</div>
+<div class="mode" onclick="setMode('sword',this)">🗡 Sword</div>
+<div class="mode" onclick="setMode('smp',this)">🌍 SMP</div>
+<div class="mode" onclick="setMode('axe',this)">🪓 Axe</div>
+<div class="mode" onclick="setMode('dia',this)">🧪 Pot</div>
 </div>
 
-<div class="card">
-<div class="leaderboard-title" id="gamemodeTitle">Overall Rankings</div>
-
-<table>
-<thead>
-<tr>
-<th>#</th>
-<th>Player</th>
-<th>Tier</th>
-<th>Score</th>
-</tr>
-</thead>
-
-<tbody id="leaderboardBody"></tbody>
-</table>
+<div class="subbar">
+<div class="btn">ℹ Information</div>
+<div class="btn" onclick="window.open('https://discord.gg/Q5rnbtrZxq')">Discord</div>
 </div>
 
+<div class="board">
+<div class="row head">
+<div>#</div><div>Player</div><div>Region</div><div>Tiers</div>
+</div>
+<div id="list"></div>
 </div>
 
 <div class="modal" id="modal" onclick="closeModal()">
-<div class="modal-box" onclick="event.stopPropagation()">
-<h2 id="modalName"></h2>
-<p id="modalTier"></p>
-<p id="modalScore"></p>
-
-<div class="skin-container">
-<img id="modalSkin">
-</div>
-
+<div class="box" onclick="event.stopPropagation()">
+<div id="mName" class="big"></div>
+<div id="mRank" class="rankTitle"></div>
+<img id="mSkin">
+<div id="mPos"></div>
+<div class="tierRow" id="mTiers"></div>
 </div>
 </div>
 
 <script>
-const leaderboardData={
+
+const data={
 overall:[
-{rank:1,username:"ItsCavell",tier:"S+",score:1505},
-{rank:2,username:"SordidParrot832",tier:"S+",score:1450},
-{rank:3,username:"Death777gt1",tier:"S",score:655},
-{rank:4,username:"xylen0r",tier:"A",score:450},
-{rank:5,username:"ao2020oa",tier:"S",score:350},
-{rank:6,username:"Godarush007",tier:"D",score:100},
-{rank:7,username:"lifeanddeath197",tier:"D",score:100},
-{rank:8,username:"None",tier:"N/A",score:0},
-{rank:9,username:"None",tier:"N/A",score:0},
-{rank:10,username:"None",tier:"N/A",score:0}
-],
-mace:[
-{rank:1,username:"ItsCavell",tier:"S+",score:400},
-{rank:2,username:"Death777gt1",tier:"S",score:355},
-{rank:3,username:"ao2020oa",tier:"S",score:350},
-{rank:4,username:"xylen0r",tier:"A",score:250},
-{rank:4,username:"SordidParrot832",tier:"A",score:250},
-{rank:6,username:"lifeanddeath197",tier:"D",score:100},
-{rank:7,username:"None",tier:"N/A",score:0},
-{rank:8,username:"None",tier:"N/A",score:0},
-{rank:9,username:"None",tier:"N/A",score:0},
-{rank:10,username:"None",tier:"N/A",score:0}
-],
-crystal:[
-{rank:1,username:"ItsCavell",tier:"S+",score:400},
-{rank:2,username:"None",tier:"N/A",score:0},
-{rank:3,username:"None",tier:"N/A",score:0},
-{rank:4,username:"None",tier:"N/A",score:0},
-{rank:5,username:"None",tier:"N/A",score:0},
-{rank:6,username:"None",tier:"N/A",score:0},
-{rank:7,username:"None",tier:"N/A",score:0},
-{rank:8,username:"None",tier:"N/A",score:0},
-{rank:9,username:"None",tier:"N/A",score:0},
-{rank:10,username:"None",tier:"N/A",score:0}
-],
-cart:[
-{rank:1,username:"None",tier:"N/A",score:0},
-{rank:2,username:"None",tier:"N/A",score:0},
-{rank:3,username:"None",tier:"N/A",score:0},
-{rank:4,username:"None",tier:"N/A",score:0},
-{rank:5,username:"None",tier:"N/A",score:0},
-{rank:6,username:"None",tier:"N/A",score:0},
-{rank:7,username:"None",tier:"N/A",score:0},
-{rank:8,username:"None",tier:"N/A",score:0},
-{rank:9,username:"None",tier:"N/A",score:0},
-{rank:10,username:"None",tier:"N/A",score:0}
-],
-uhc:[
-{rank:1,username:"ItsCavell",tier:"S",score:350},
-{rank:2,username:"None",tier:"N/A",score:0},
-{rank:3,username:"None",tier:"N/A",score:0},
-{rank:4,username:"None",tier:"N/A",score:0},
-{rank:5,username:"None",tier:"N/A",score:0},
-{rank:6,username:"None",tier:"N/A",score:0},
-{rank:7,username:"None",tier:"N/A",score:0},
-{rank:8,username:"None",tier:"N/A",score:0},
-{rank:9,username:"None",tier:"N/A",score:0},
-{rank:10,username:"None",tier:"N/A",score:0}
-],
-sword:[
-{rank:1,username:"SordidParrot832",tier:"S+",score:400},
-{rank:2,username:"None",tier:"N/A",score:0},
-{rank:3,username:"None",tier:"N/A",score:0},
-{rank:4,username:"None",tier:"N/A",score:0},
-{rank:5,username:"None",tier:"N/A",score:0},
-{rank:6,username:"None",tier:"N/A",score:0},
-{rank:7,username:"None",tier:"N/A",score:0},
-{rank:8,username:"None",tier:"N/A",score:0},
-{rank:9,username:"None",tier:"N/A",score:0},
-{rank:10,username:"None",tier:"N/A",score:0}
-],
-axe:[
-{rank:1,username:"SordidParrot832",tier:"S+",score:400},
-{rank:2,username:"ItsCavell",tier:"S",score:355},
-{rank:3,username:"None",tier:"N/A",score:0},
-{rank:4,username:"None",tier:"N/A",score:0},
-{rank:5,username:"None",tier:"N/A",score:0},
-{rank:6,username:"None",tier:"N/A",score:0},
-{rank:7,username:"None",tier:"N/A",score:0},
-{rank:8,username:"None",tier:"N/A",score:0},
-{rank:9,username:"None",tier:"N/A",score:0},
-{rank:10,username:"None",tier:"N/A",score:0}
-],
-dia:[
-{rank:1,username:"None",tier:"N/A",score:0},
-{rank:2,username:"None",tier:"N/A",score:0},
-{rank:3,username:"None",tier:"N/A",score:0},
-{rank:4,username:"None",tier:"N/A",score:0},
-{rank:5,username:"None",tier:"N/A",score:0},
-{rank:6,username:"None",tier:"N/A",score:0},
-{rank:7,username:"None",tier:"N/A",score:0},
-{rank:8,username:"None",tier:"N/A",score:0},
-{rank:9,username:"None",tier:"N/A",score:0},
-{rank:10,username:"None",tier:"N/A",score:0}
-],
-smp:[
-{rank:1,username:"SordidParrot832",tier:"S+",score:400},
-{rank:2,username:"Death777gt1",tier:"A+",score:300},
-{rank:3,username:"xylen0r",tier:"B",score:200},
-{rank:4,username:"Godarush007",tier:"D",score:100},
-{rank:5,username:"None",tier:"N/A",score:0},
-{rank:6,username:"None",tier:"N/A",score:0},
-{rank:7,username:"None",tier:"N/A",score:0},
-{rank:8,username:"None",tier:"N/A",score:0},
-{rank:9,username:"None",tier:"N/A",score:0},
-{rank:10,username:"None",tier:"N/A",score:0}
+{rank:1,username:"ItsCavell",score:1505,region:"NA",tiers:["S+","S","A+"]},
+{rank:2,username:"SordidParrot832",score:1450,region:"EU",tiers:["S+","A+"]},
+{rank:3,username:"Death777gt1",score:655,region:"NA",tiers:["S","A"]},
+{rank:4,username:"xylen0r",score:450,region:"EU",tiers:["A","B+"]},
+{rank:5,username:"ao2020oa",score:350,region:"EU",tiers:["S","B+"]}
 ]
-};
+}
 
-function shorten(n){return n.length>9?n.slice(0,9)+"...":n}
+function getRankTitle(s){
+if(s>=1500)return"Combat Grandmaster"
+if(s>=1250)return"Combat Master"
+if(s>=1000)return"Combat Ace"
+if(s>=500)return"Combat Specialist"
+if(s>=250)return"Combat Cadet"
+if(s>=100)return"Combat Novice"
+return"Rookie"
+}
 
-function getRankClass(r){
-if(r===1)return"top1"
-if(r===2)return"top2"
-if(r===3)return"top3"
+function tierClass(t){
+if(t==="S+")return"gold"
+if(t==="S")return"gold2"
+if(t==="A+")return"silver"
+if(t==="A"||t==="B+")return"bronze"
+return"grey"
+}
+
+function rankStyle(r){
+if(r===1)return"r1"
+if(r===2)return"r2"
+if(r===3)return"r3"
 return""
 }
 
-function switchGamemode(mode){
-document.querySelectorAll('.gamemode-btn').forEach(b=>b.classList.remove('active'));
-event.target.classList.add('active');
-document.getElementById('gamemodeTitle').textContent=mode.toUpperCase()+" RANKINGS";
-renderLeaderboard(leaderboardData[mode]);
+function render(list){
+listEl.innerHTML=""
+list.forEach(p=>{
+const row=document.createElement("div")
+row.className="row"
+row.onclick=()=>openModal(p)
+row.innerHTML=`
+<div class="rankBox"><div class="${rankStyle(p.rank)} rankNum">${p.rank}.</div></div>
+<div class="player">
+<img src="https://api.mineatar.io/face/${p.username}">
+<div>
+<div>${p.username}</div>
+<div class="sub">${getRankTitle(p.score)} (${p.score} points)</div>
+</div>
+</div>
+<div><span class="region ${p.region||'default'}">${p.region||'-'}</span></div>
+<div class="tiers">${p.tiers.map(t=>`<div class="t ${tierClass(t)}">${t}</div>`).join("")}</div>
+`
+listEl.appendChild(row)
+})
 }
 
 function openModal(p){
-document.getElementById("modal").style.display="flex";
-document.getElementById("modalName").textContent=p.username;
-document.getElementById("modalTier").textContent="Tier: "+p.tier;
-document.getElementById("modalScore").textContent="Score: "+p.score;
-
-const skin=document.getElementById("modalSkin");
-
-if(p.username==="None"){
-skin.style.visibility="hidden";
-return;
+modal.style.display="flex"
+mName.textContent=p.username
+mRank.textContent=getRankTitle(p.score)
+mPos.textContent="#"+p.rank+" Overall ("+p.score+" points)"
+mSkin.src=`https://api.mineatar.io/face/${p.username}`
+mTiers.innerHTML=p.tiers.map(t=>`<div class="t ${tierClass(t)}">${t}</div>`).join("")
 }
 
-skin.style.visibility="visible";
-skin.src="https://mc-heads.net/avatar/."+p.username+"/110";
+function closeModal(){modal.style.display="none"}
+
+function setMode(m,e){
+document.querySelectorAll(".mode").forEach(x=>x.classList.remove("active"))
+e.classList.add("active")
+render(data[m]||[])
 }
 
-function closeModal(){
-document.getElementById("modal").style.display="none";
+function searchPlayer(v){
+if(!v)return render(data.overall)
+const p=data.overall.find(x=>x.username.toLowerCase()===v.toLowerCase())
+if(p)openModal(p)
+else{
+modal.style.display="flex"
+mName.textContent=v
+mRank.textContent="Unranked"
+mPos.textContent=""
+mSkin.src=`https://api.mineatar.io/face/${v}`
+mTiers.innerHTML=""
+}
 }
 
-function renderLeaderboard(data){
-const body=document.getElementById("leaderboardBody");
-body.innerHTML="";
+render(data.overall)
 
-data.forEach(p=>{
-const row=document.createElement("tr");
-row.onclick=()=>openModal(p);
-row.innerHTML=`
-<td class="rank ${getRankClass(p.rank)}">#${p.rank}</td>
-<td>${shorten(p.username)}</td>
-<td><span class="tier">${p.tier}</span></td>
-<td>${p.score}</td>
-`;
-body.appendChild(row);
-});
-}
-
-renderLeaderboard(leaderboardData.overall);
 </script>
 
 </body>
