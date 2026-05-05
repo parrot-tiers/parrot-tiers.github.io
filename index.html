@@ -8,170 +8,83 @@
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
+body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
 
-body{
-background:#0c0f14;
-color:#d1d5db;
-font-family:Segoe UI,Inter,sans-serif
-}
+.top{display:flex;justify-content:space-between;align-items:center;padding:14px 22px;border-bottom:1px solid #1f2937}
+.logo{height:40px}
+.search{background:#111827;border:1px solid #374151;border-radius:10px;padding:8px 12px;color:#fff;width:220px}
 
-.container{max-width:1100px;margin:auto;padding:15px}
+.gamemodes{display:flex;gap:12px;padding:14px 20px;overflow-x:auto;border-bottom:1px solid #1f2937}
+.mode{flex:0 0 auto;background:#111827;border:1px solid #374151;padding:12px 16px;border-radius:14px;color:#9ca3af;cursor:pointer}
+.mode.active{border-color:#fff;color:#fff}
 
-.header{text-align:center;margin-bottom:15px}
-.logo{height:60px}
+.board{margin:20px;border-radius:16px;overflow:hidden;border:1px solid #1f2937}
+.row{display:grid;grid-template-columns:80px 1.6fr 1fr;align-items:center;padding:14px 16px;border-top:1px solid #1f2937;position:relative}
+.row:hover{background:#151a22}
+.head{background:#0f141b;color:#6b7280;font-size:13px}
 
-.search{
-width:100%;
-margin:10px 0;
-padding:10px;
-background:#111827;
-border:1px solid #374151;
-border-radius:10px;
-color:#fff
-}
+.rankNum{font-weight:900;font-size:18px}
 
-.navbar{
-display:flex;
-gap:10px;
-overflow-x:auto;
-margin-bottom:15px
-}
+.player{display:flex;align-items:center;gap:12px}
+.player img{width:42px;height:42px}
 
-.btn{
-flex:0 0 auto;
-padding:10px 14px;
-background:#111827;
-border:1px solid #374151;
-border-radius:10px;
-cursor:pointer;
-color:#9ca3af
-}
+.tiers{display:flex;gap:6px;flex-wrap:wrap}
+.t{padding:4px 8px;border-radius:6px;font-size:11px;font-weight:700}
 
-.btn.active{
-color:#fff;
-border-color:#fff
-}
+.gold{background:#ffd700;color:#000}
+.silver{background:#c0c0c0;color:#000}
+.bronze{background:#cd7f32;color:#fff}
+.grey{background:#374151;color:#aaa}
 
-.board{
-display:flex;
-flex-direction:column;
-gap:10px
-}
-
-.row{
-display:flex;
-align-items:center;
-background:#111827;
-border-radius:12px;
-overflow:hidden;
-cursor:pointer;
-transition:.2s
-}
-
-.row:hover{
-transform:translateX(-4px) scale(1.01);
-background:#151a22
-}
-
-.rankBox{
-width:70px;
+.diag{
+position:absolute;
+right:0;
+top:0;
+width:80px;
+height:100%;
+clip-path:polygon(100% 0,100% 100%,0 100%);
 display:flex;
 align-items:center;
 justify-content:center;
-font-weight:900;
-font-size:18px
 }
 
-.r1{background:linear-gradient(135deg,#ffd700,#b89600);color:#000}
-.r2{background:linear-gradient(135deg,#c0c0c0,#8a8a8a);color:#000}
-.r3{background:linear-gradient(135deg,#cd7f32,#8b5a2b);color:#fff}
+.r1{background:linear-gradient(135deg,#ffd700,#b89600)}
+.r2{background:linear-gradient(135deg,#c0c0c0,#8a8a8a)}
+.r3{background:linear-gradient(135deg,#cd7f32,#8b5a2b)}
 
-.player{
-display:flex;
-align-items:center;
-gap:10px;
-padding:10px;
-flex:1
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center}
+.box{background:#0f141b;border:1px solid #1f2937;border-radius:18px;padding:24px;width:320px;text-align:center}
+.box img{width:100px;margin:10px 0}
+
+@media(max-width:700px){
+.row{grid-template-columns:60px 1fr}
+.tiers{margin-top:6px}
 }
-
-.player img{
-width:50px;
-height:50px;
-object-fit:contain;
-image-rendering:pixelated
-}
-
-.info{
-display:flex;
-flex-direction:column
-}
-
-.name{font-weight:700}
-
-.sub{font-size:12px;color:#9ca3af}
-
-.tiers{
-display:flex;
-gap:6px;
-flex-wrap:wrap;
-padding:10px
-}
-
-.t{
-background:#1f2937;
-padding:4px 8px;
-border-radius:6px;
-font-size:11px;
-text-align:center
-}
-
-.modal{
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.8);
-display:none;
-align-items:center;
-justify-content:center
-}
-
-.box{
-background:#0f141b;
-padding:20px;
-border-radius:14px;
-text-align:center;
-width:300px
-}
-
-.box img{
-width:120px;
-margin:10px 0
-}
-
-.big{font-size:20px;font-weight:800}
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
-<div class="header">
+<div class="top">
 <img src="file_00000000c5347246b0f83834a91f3221.png" class="logo">
-<input class="search" id="search" placeholder="Search player...">
+<input class="search" placeholder="Search player...">
 </div>
 
-<div class="navbar">
-<div class="btn active" onclick="setMode('overall',this)">🏆 Overall</div>
-<div class="btn" onclick="setMode('mace',this)">🔨 Mace</div>
-<div class="btn" onclick="setMode('crystal',this)">💎 Crystal</div>
-<div class="btn" onclick="setMode('cart',this)">🛒 Cart</div>
-<div class="btn" onclick="setMode('uhc',this)">❤️ UHC</div>
-<div class="btn" onclick="setMode('sword',this)">🗡 Sword</div>
-<div class="btn" onclick="setMode('smp',this)">🌍 SMP</div>
+<div class="gamemodes">
+<div class="mode active" onclick="setMode('overall',this)">🏆 Overall</div>
+<div class="mode" onclick="setMode('mace',this)">🔨 Mace</div>
+<div class="mode" onclick="setMode('crystal',this)">💎 Crystal</div>
+<div class="mode" onclick="setMode('cart',this)">🛒 Cart</div>
+<div class="mode" onclick="setMode('uhc',this)">❤️ UHC</div>
+<div class="mode" onclick="setMode('sword',this)">🗡 Sword</div>
+<div class="mode" onclick="setMode('smp',this)">🌍 SMP</div>
 </div>
 
-<div class="board" id="board"></div>
-
+<div class="board">
+<div class="row head">
+<div>#</div><div>Player</div><div>Data</div>
+</div>
+<div id="list"></div>
 </div>
 
 <div class="modal" id="modal">
@@ -180,17 +93,13 @@ margin:10px 0
 
 <script>
 
-const board=document.getElementById("board")
-const modal=document.getElementById("modal")
-const modalBox=document.getElementById("modalBox")
-
-const data={
+const leaderboardData={
 overall:[
 {rank:1,username:"ItsCavell",tier:"S+",score:1200},
-{rank:2,username:"Death777gt1",tier:"S",score:355},
-{rank:3,username:"ao2020oa",tier:"S",score:350},
-{rank:4,username:"SordidParrot832",tier:"S",score:350},
-{rank:5,username:"lifeanddeath197",tier:"D",score:100},
+{rank:2,username:"Death777gt1",tier:"S",score:370},
+{rank:3,username:"ao2020oa",tier:"S",score:369},
+{rank:4,username:"SordidParrot832",tier:"S",score:360},
+{rank:5,username:"None",tier:"N/A",score:0},
 {rank:6,username:"None",tier:"N/A",score:0},
 {rank:7,username:"None",tier:"N/A",score:0},
 {rank:8,username:"None",tier:"N/A",score:0},
@@ -199,34 +108,48 @@ overall:[
 ],
 mace:[
 {rank:1,username:"ItsCavell",tier:"S+",score:400},
-{rank:2,username:"Death777gt1",tier:"S",score:355},
-{rank:3,username:"ao2020oa",tier:"S",score:350},
-{rank:4,username:"lifeanddeath197",tier:"D",score:100},
-{rank:5,username:"None",tier:"N/A",score:0}
+{rank:2,username:"Death777gt1",tier:"S",score:370},
+{rank:3,username:"ao2020oa",tier:"S",score:369},
+{rank:4,username:"None",tier:"N/A",score:0},
+{rank:5,username:"None",tier:"N/A",score:0},
+{rank:6,username:"None",tier:"N/A",score:0},
+{rank:7,username:"None",tier:"N/A",score:0},
+{rank:8,username:"None",tier:"N/A",score:0},
+{rank:9,username:"None",tier:"N/A",score:0},
+{rank:10,username:"None",tier:"N/A",score:0}
 ],
 crystal:[
-{rank:1,username:"ItsCavell",tier:"S+",score:400}
+{rank:1,username:"ItsCavell",tier:"S+",score:400},
+{rank:2,username:"None",tier:"N/A",score:0},
+{rank:3,username:"None",tier:"N/A",score:0},
+{rank:4,username:"None",tier:"N/A",score:0},
+{rank:5,username:"None",tier:"N/A",score:0},
+{rank:6,username:"None",tier:"N/A",score:0},
+{rank:7,username:"None",tier:"N/A",score:0},
+{rank:8,username:"None",tier:"N/A",score:0},
+{rank:9,username:"None",tier:"N/A",score:0},
+{rank:10,username:"None",tier:"N/A",score:0}
 ],
-cart:[
-{rank:1,username:"None",tier:"N/A",score:0}
-],
+cart:Array.from({length:10},(_,i)=>({rank:i+1,username:"None",tier:"N/A",score:0})),
 uhc:[
-{rank:1,username:"ItsCavell",tier:"S+",score:400}
+{rank:1,username:"ItsCavell",tier:"S+",score:400},
+...Array.from({length:9},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0}))
 ],
 sword:[
-{rank:1,username:"SordidParrot832",tier:"S",score:350}
+{rank:1,username:"SordidParrot832",tier:"S",score:360},
+...Array.from({length:9},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0}))
 ],
-smp:[
-{rank:1,username:"None",tier:"N/A",score:0}
-]
+smp:Array.from({length:10},(_,i)=>({rank:i+1,username:"None",tier:"N/A",score:0}))
+};
+
+function tierClass(t){
+if(t==="S+")return"gold"
+if(t==="S")return"silver"
+if(t==="A")return"bronze"
+return"grey"
 }
 
-function skin(name){
-if(name==="None") return "https://mc-heads.net/avatar/steve"
-return "https://mc-heads.net/body/" + name + "/right"
-}
-
-function rankClass(r){
+function rankStyle(r){
 if(r===1)return"r1"
 if(r===2)return"r2"
 if(r===3)return"r3"
@@ -234,60 +157,57 @@ return""
 }
 
 function render(mode){
-board.innerHTML=""
+list.innerHTML=""
 
-data[mode].forEach(p=>{
+let data=mode==="overall"?leaderboardData.overall:leaderboardData[mode]
+
+data.forEach(p=>{
 const row=document.createElement("div")
 row.className="row"
 row.onclick=()=>openModal(p)
 
+const skin=p.username==="None"
+?"https://api.mineskin.org/render/texture/steve/full"
+:`https://starlightskins.lunareclipse.studio/render/default/${p.username}/full`
+
 row.innerHTML=`
-<div class="rankBox ${rankClass(p.rank)}">${p.rank}</div>
+<div class="rankNum">${p.rank}</div>
 <div class="player">
-<img src="${skin(p.username)}">
-<div class="info">
-<div class="name">${p.username}</div>
-<div class="sub">${p.score} points</div>
+<img src="${skin}">
+<div>
+<div>${p.username}</div>
+<div style="font-size:12px;color:#9ca3af">${p.tier} • ${p.score}</div>
 </div>
 </div>
 <div class="tiers">
-<div class="t">${p.tier}</div>
+<span class="t ${tierClass(p.tier)}">${p.tier}</span>
 </div>
+${p.rank<=3?`<div class="diag ${rankStyle(p.rank)}"></div>`:""}
 `
 
-board.appendChild(row)
+list.appendChild(row)
 })
 }
 
 function openModal(p){
 modal.style.display="flex"
+
 modalBox.innerHTML=`
-<div onclick="modal.style.display='none'" style="cursor:pointer;text-align:right">✕</div>
-<div class="big">${p.username}</div>
-<img src="${skin(p.username)}">
-<div>${p.score} points</div>
-<div>${p.tier}</div>
+<div onclick="modal.style.display='none'" style="text-align:right;cursor:pointer">✕</div>
+<h2>${p.username}</h2>
+<img src="https://starlightskins.lunareclipse.studio/render/default/${p.username}/full">
+<p>${p.tier}</p>
+<p>${p.score} points</p>
 `
 }
 
 function setMode(m,e){
-document.querySelectorAll(".btn").forEach(b=>b.classList.remove("active"))
+document.querySelectorAll(".mode").forEach(x=>x.classList.remove("active"))
 e.classList.add("active")
 render(m)
 }
 
-document.getElementById("search").addEventListener("keydown",e=>{
-if(e.key==="Enter"){
-const name=e.target.value.toLowerCase()
-for(const mode in data){
-const found=data[mode].find(p=>p.username.toLowerCase()===name)
-if(found){openModal(found);return}
-}
-}
-})
-
 render("overall")
-
 </script>
 
 </body>
