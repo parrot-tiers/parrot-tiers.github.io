@@ -18,6 +18,9 @@ body{background:#0c0f14;color:#d1d5db;font-family:Inter,Segoe UI}
 .mode{flex:0 0 auto;background:#111827;border:1px solid #374151;padding:12px 16px;border-radius:14px;color:#9ca3af;cursor:pointer}
 .mode.active{border-color:#fff;color:#fff}
 
+.subbar{display:flex;justify-content:flex-end;gap:10px;padding:12px 20px}
+.btn{background:#111827;border:1px solid #374151;padding:8px 12px;border-radius:10px;color:#cbd5e1;cursor:pointer}
+
 .board{margin:20px;border-radius:16px;overflow:hidden;border:1px solid #1f2937}
 .row{position:relative;display:grid;grid-template-columns:90px 1.6fr 120px 1fr;align-items:center;padding:14px 16px;border-top:1px solid #1f2937;transition:.25s}
 .row:hover{background:#151a22;transform:translateX(-6px) scale(1.02)}
@@ -30,18 +33,29 @@ content:"";
 position:absolute;
 top:0;
 right:0;
-width:120px;
+width:140px;
 height:100%;
 clip-path:polygon(100% 0,0 0,100% 100%);
-opacity:.9;
 }
 
 .r1::after{background:linear-gradient(135deg,#ffd700,#b89600)}
 .r2::after{background:linear-gradient(135deg,#c0c0c0,#8a8a8a)}
 .r3::after{background:linear-gradient(135deg,#cd7f32,#8b5a2b)}
 
+.r1:hover::after,.r2:hover::after,.r3:hover::after{
+animation:shine .8s linear
+}
+
+@keyframes shine{
+0%{filter:brightness(1)}
+50%{filter:brightness(1.6)}
+100%{filter:brightness(1)}
+}
+
 .player{display:flex;align-items:center;gap:12px}
 .player img{width:40px;border-radius:8px}
+
+.sub{font-size:12px;color:#9ca3af}
 
 .region{padding:5px 9px;border-radius:8px;font-weight:700;font-size:12px}
 .NA{background:#3b1f25;color:#ff7a8a}
@@ -56,6 +70,13 @@ opacity:.9;
 .silver{background:#c0c0c0;color:#000}
 .bronze{background:#cd7f32;color:#fff}
 .grey{background:#374151;color:#9ca3af}
+
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.8);display:none;align-items:center;justify-content:center}
+.box{background:#0f141b;border:1px solid #1f2937;border-radius:18px;padding:24px;width:330px;text-align:center}
+.box img{width:100px;margin:10px 0}
+.big{font-size:22px;font-weight:800}
+.rankTitle{color:#eab308;margin:8px 0}
+.tierRow{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-top:10px}
 
 @media(max-width:700px){
 .row{grid-template-columns:70px 1fr;grid-template-rows:auto auto auto}
@@ -84,6 +105,11 @@ opacity:.9;
 <div class="mode" onclick="setMode('dia',this)">🧪 Pot</div>
 </div>
 
+<div class="subbar">
+<div class="btn" onclick="alert('Parrot Tiers leaderboard info')">ℹ Info</div>
+<div class="btn" onclick="window.open('https://discord.gg/Q5rnbtrZxq')">Discord</div>
+</div>
+
 <div class="board">
 <div class="row head">
 <div>#</div><div>Player</div><div>Region</div><div>Tiers</div>
@@ -91,9 +117,30 @@ opacity:.9;
 <div id="list"></div>
 </div>
 
+<div class="modal" id="modal">
+<div class="box" id="modalBox"></div>
+</div>
+
 <script>
 
 const listEl=document.getElementById("list")
+const modal=document.getElementById("modal")
+const modalBox=document.getElementById("modalBox")
+const search=document.querySelector(".search")
+
+search.addEventListener("keydown",e=>{
+if(e.key==="Enter")searchPlayer(search.value)
+})
+
+function getRankTitle(s){
+if(s>=1500)return"Combat Grandmaster"
+if(s>=1250)return"Combat Master"
+if(s>=1000)return"Combat Ace"
+if(s>=500)return"Combat Specialist"
+if(s>=250)return"Combat Cadet"
+if(s>=100)return"Combat Novice"
+return"Rookie"
+}
 
 function tierClass(t){
 if(t==="S+")return"gold"
@@ -126,7 +173,7 @@ crystal:[
 ],
 cart:[
 {rank:1,username:"ItsCavell",tier:"S+",score:400,region:"AS"},
-...Array.from({length:20},(_,i)=>({rank:i+1,username:"None",tier:"N/A",score:0,region:""})),
+...Array.from({length:20},(_,i)=>({rank:i+1,username:"None",tier:"N/A",score:0,region:""}))
 ],
 uhc:[
 {rank:1,username:"ItsCavell",tier:"S+",score:400,region:"EU"},
@@ -136,7 +183,7 @@ uhc:[
 sword:[
 {rank:1,username:"Sorlowww",tier:"S+",score:400,region:"AS"},
 {rank:2,username:"xylen0r",tier:"C",score:150,region:"AS"},
-...Array.from({length:18},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0,region:""}))
+...Array.from({length:18},(_,i)=>({rank:i+3,username:"None",tier:"N/A",score:0,region:""}))
 ],
 axe:[
 {rank:1,username:"Sorlowww",tier:"S+",score:400,region:"AS"},
@@ -177,6 +224,7 @@ let list=mode==="overall"?getAllPlayers():leaderboardData[mode]
 list.forEach(p=>{
 const row=document.createElement("div")
 row.className="row "+rankStyle(p.rank)
+row.onclick=()=>openModal(p,mode)
 
 const tiers=mode==="overall"
 ?p.tiers.map(t=>`<div class="t ${tierClass(t.tier)}">${t.tier}</div>`).join("")
@@ -186,7 +234,10 @@ row.innerHTML=`
 <div class="rankNum">${p.rank}.</div>
 <div class="player">
 <img src="https://mc-heads.net/avatar/Steve">
+<div>
 <div>${p.username}</div>
+<div class="sub">${getRankTitle(p.score)} (${p.score})</div>
+</div>
 </div>
 <div><span class="region ${p.region||'default'}">${p.region||'-'}</span></div>
 <div class="tiers">${tiers}</div>
@@ -195,10 +246,29 @@ listEl.appendChild(row)
 })
 }
 
+function openModal(p){
+modal.style.display="flex"
+modalBox.innerHTML=`
+<div style="text-align:right;cursor:pointer" onclick="closeModal()">✕</div>
+<div class="big">${p.username}</div>
+<div class="rankTitle">${getRankTitle(p.score)}</div>
+<img src="https://mc-heads.net/avatar/Steve">
+<div>#${p.rank} (${p.score} points)</div>
+`
+}
+
+function closeModal(){modal.style.display="none"}
+
 function setMode(m,e){
 document.querySelectorAll(".mode").forEach(x=>x.classList.remove("active"))
 e.classList.add("active")
 render(m)
+}
+
+function searchPlayer(name){
+const players=getAllPlayers()
+const found=players.find(p=>p.username.toLowerCase()===name.toLowerCase())
+if(found)openModal(found)
 }
 
 render("overall")
