@@ -3,148 +3,274 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Parrot Tiers - Info</title>
+<title>Parrot Tiers - Information</title>
+<link rel="icon" href="/images/favicon.ico">
 
 <style>
 *{margin:0;padding:0;box-sizing:border-box}
 
 body{
-background:linear-gradient(#1c1c1c,#0f0f0f);
-color:#e5e5e5;
-font-family:'Segoe UI',sans-serif
+background:#0c0f14;
+color:#d1d5db;
+font-family:Inter,Segoe UI;
 }
 
-.container{max-width:1000px;margin:auto;padding:20px}
-
-.header{text-align:center;margin:20px 0 30px}
-.logo{max-height:110px}
-
-.navbar{
+.top{
 display:flex;
-gap:10px;
-overflow-x:auto;
-margin-bottom:25px
+align-items:center;
+justify-content:space-between;
+padding:14px 22px;
+border-bottom:1px solid #1f2937;
 }
 
-.nav-btn{
-flex:0 0 auto;
-background:#2a2a2a;
-border:1px solid #3a3a3a;
-color:#bbb;
-padding:10px 16px;
-border-radius:8px;
+.logo{
+height:40px;
 cursor:pointer;
-text-decoration:none;
 }
 
-.nav-btn:hover{
-background:#e0b84c;
-color:#000;
-border-color:#e0b84c;
+.container{
+max-width:1100px;
+margin:auto;
+padding:25px;
 }
 
 .card{
-background:#181818;
-border:1px solid #2a2a2a;
-border-radius:12px;
-padding:20px;
-margin-bottom:20px
+background:#111827;
+border:1px solid #1f2937;
+border-radius:18px;
+padding:24px;
+margin-bottom:20px;
 }
 
 .title{
-text-align:center;
-margin-bottom:15px;
-font-size:1.5em;
-color:#e0b84c
+font-size:28px;
+font-weight:800;
+margin-bottom:18px;
+color:#fff;
 }
 
-.section{
-margin-bottom:20px;
-line-height:1.6
+.sectionTitle{
+font-size:20px;
+font-weight:700;
+margin-bottom:14px;
+color:#fff;
 }
 
-.section h3{
-color:#e0b84c;
-margin-bottom:6px
+.line{
+padding:10px 14px;
+background:#0f172a;
+border:1px solid #1e293b;
+border-radius:12px;
+margin-bottom:10px;
 }
 
-.back-btn{
-display:block;
-text-align:center;
-margin-top:25px;
-padding:12px;
-background:#e0b84c;
+.rank{
+display:flex;
+justify-content:space-between;
+align-items:center;
+}
+
+.tiers{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+margin-top:10px;
+}
+
+.tier{
+width:48px;
+height:48px;
+border-radius:14px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:800;
+font-size:15px;
+}
+
+.gold{
+background:#ffd700;
 color:#000;
-border-radius:8px;
-text-decoration:none;
-font-weight:bold;
 }
 
-.back-btn:hover{
-opacity:0.9
+.gold2{
+background:#f0c000;
+color:#000;
+}
+
+.silver{
+background:#c0c0c0;
+color:#000;
+}
+
+.bronze{
+background:#cd7f32;
+color:#fff;
+}
+
+.grey{
+background:#374151;
+color:#d1d5db;
+}
+
+.discord{
+display:inline-flex;
+align-items:center;
+gap:10px;
+background:#5865F2;
+padding:12px 18px;
+border-radius:12px;
+font-weight:700;
+color:#fff;
+text-decoration:none;
+margin-top:10px;
+}
+
+.ip{
+font-size:18px;
+font-weight:700;
+margin-top:10px;
+}
+
+.small{
+color:#9ca3af;
+font-size:14px;
+margin-top:6px;
+line-height:1.7;
+}
+
+@media(max-width:700px){
+
+.rank{
+flex-direction:column;
+align-items:flex-start;
+gap:4px;
+}
+
+.container{
+padding:16px;
+}
+
 }
 </style>
 </head>
 
 <body>
 
-<div class="container">
-
-<div class="header">
-<img src="file_00000000c5347246b0f83834a91f3221.png" class="logo">
+<div class="top">
+<img src="file_00000000c5347246b0f83834a91f3221.png" class="logo" onclick="window.location.href='/'">
 </div>
 
-<div class="navbar">
-<a href="https://parrot-tiers.github.io" class="nav-btn">🏆 Rankings</a>
-<a href="#" class="nav-btn">📜 Info</a>
-<a href="https://discord.gg" class="nav-btn">💬 Discord</a>
+<div class="container">
+
+<div class="card">
+<div class="title">Parrot Tiers Information</div>
+
+<div class="sectionTitle">Server</div>
+
+<div class="line">
+<div class="ip">ParrotSkygen.aternos.me</div>
+<div class="small">Port: 34924</div>
+</div>
+
+<a class="discord" href="https://discord.gg/Q5rnbtrZxq" target="_blank">
+Discord Server
+</a>
+
 </div>
 
 <div class="card">
-<div class="title">About Parrot Tiers</div>
 
-<div class="section">
-<h3>📌 What is this</h3>
-<p>
-This is Parrot Tiers, the best tier testing system of all time! Join Now with the Ip and port:<br>
-ParrotSkygen.aternos.me
-</p>
+<div class="sectionTitle">Combat Ranks</div>
+
+<div class="line rank">
+<div>Combat Grandmaster</div>
+<div>1500+ Points</div>
 </div>
 
-<div class="section">
-<h3>⚔️ Ranking System</h3>
-<p>
-S+ = 400+<br>
-S = 350-399<br>
-A+ = 300-349<br>
-A = 250-299<br>
-B+ = 225-249<br>
-B= 200-224<br>
-C+ = 175-199<br>
-C = 150-174<br>
-D+ = 125-149<br>
-D = 100-150<br>
-E = 1-100<br>
-Unranked = 0
-</p>
+<div class="line rank">
+<div>Combat Master</div>
+<div>1250+ Points</div>
 </div>
 
-<div class="section">
-<h3>🎮 Gamemodes</h3>
-<p>
-Each gamemode has its own leaderboard. Here are the gamemodes:<br>
-Mace, Crystal, UHC, Sword, SMP, Axe and Sword.
-</p>
+<div class="line rank">
+<div>Combat Ace</div>
+<div>1000+ Points</div>
 </div>
 
-<div class="section">
-<h3>👑 How to test?</h3>
-<p>
-Join the discord to tier test!
-</p>
+<div class="line rank">
+<div>Combat Specialist</div>
+<div>500+ Points</div>
 </div>
 
-<a href="https://parrot-tiers.github.io" class="back-btn">⬅️ Back to Rankings</a>
+<div class="line rank">
+<div>Combat Cadet</div>
+<div>250+ Points</div>
+</div>
+
+<div class="line rank">
+<div>Combat Novice</div>
+<div>100+ Points</div>
+</div>
+
+<div class="line rank">
+<div>Rookie</div>
+<div>100 Or Less Points</div>
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="sectionTitle">Tier List</div>
+
+<div class="tiers">
+
+<div class="tier gold">S+</div>
+<div class="tier gold2">S</div>
+
+<div class="tier silver">A+</div>
+
+<div class="tier bronze">A</div>
+<div class="tier bronze">B+</div>
+
+<div class="tier grey">B</div>
+<div class="tier grey">C+</div>
+<div class="tier grey">C</div>
+<div class="tier grey">D+</div>
+<div class="tier grey">D</div>
+<div class="tier grey">E</div>
+
+</div>
+
+<div class="small">
+E is the lowest tier and S+ is the highest possible tier.
+</div>
+
+</div>
+
+<div class="card">
+
+<div class="sectionTitle">Additional Information</div>
+
+<div class="small">
+• To get tested, join the Discord server and create a ticket.<br><br>
+
+• Rankings are usually updated on the website the same day or the day after you get tested.<br><br>
+
+• If you are inactive for too long in a gamemode, your tier in that gamemode will become retired.<br><br>
+
+• Retired gamemodes do not count towards your overall points.<br><br>
+
+• Regions:<br>
+NA = North America<br>
+EU = Europe<br>
+SA = South America<br>
+AS = Asia<br>
+AU = Australia<br><br>
+
+• Contact us through the Discord server for support, corrections, or questions.
+</div>
 
 </div>
 
