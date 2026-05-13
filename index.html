@@ -166,14 +166,72 @@ z-index:9999;
 </div>
 
 <script>
-const listEl=document.getElementById("list")
-const modal=document.getElementById("modal")
-const modalBox=document.getElementById("modalBox")
-const search=document.querySelector(".search")
+const leaderboardData={
+mace:[
+{username:"ItsCavell",tier:"S+",score:450,region:"EU"},
+{username:"Death777gt1",tier:"S+",score:400,region:"SA"},
+{username:"ao2020oa",tier:"S",score:350,region:"EU"},
+{username:"ItzAdaptMC",tier:"A+",score:300,region:"EU"},
+{username:"xylen0r",tier:"A",score:250,region:"AS"},
+{username:"SordidParrot832",tier:"A",score:250,region:"AS"},
+{username:"Tiktok RAZZA",tier:"A",score:250,region:"EU"},
+{username:"lifeanddeath197",tier:"D",score:100,region:"AS"},
+{username:"monke2461",tier:"S",score:350,region:"AS"},
+{username:"Firefox099179",tier:"S",score:350,region:"EU"},
+...Array.from({length:10},()=>({username:"None",tier:"N/A",score:0,region:""}))
+],
 
-search.addEventListener("keydown",e=>{
-if(e.key==="Enter")searchPlayer(search.value)
-})
+crystal:[
+{username:"ItsCavell",tier:"S+",score:400,region:"EU"},
+{username:"SordidParrot832",tier:"C",score:150,region:"AS"},
+{username:"Tiktok RAZZA",tier:"C",score:150,region:"EU"},
+...Array.from({length:17},()=>({username:"None",tier:"N/A",score:0,region:""}))
+],
+
+cart:[
+{username:"ItsCavell",tier:"S+",score:400,region:"EU"},
+...Array.from({length:19},()=>({username:"None",tier:"N/A",score:0,region:""}))
+],
+
+uhc:[
+{username:"ItsCavell",tier:"S+",score:400,region:"EU"},
+{username:"SordidParrot832",tier:"B",score:200,region:"AS"},
+...Array.from({length:18},()=>({username:"None",tier:"N/A",score:0,region:""}))
+],
+
+sword:[
+{username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
+{username:"xylen0r",tier:"C",score:150,region:"AS"},
+...Array.from({length:18},()=>({username:"None",tier:"N/A",score:0,region:""}))
+],
+
+axe:[
+{username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
+{username:"ItsCavell",tier:"B",score:200,region:"EU"},
+...Array.from({length:18},()=>({username:"None",tier:"N/A",score:0,region:""}))
+],
+
+dia:[
+{username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
+...Array.from({length:19},()=>({username:"None",tier:"N/A",score:0,region:""}))
+],
+
+smp:[
+{username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
+{username:"ItsCavell",tier:"S",score:350,region:"EU"},
+{username:"Death777gt1",tier:"A+",score:300,region:"SA"},
+{username:"xylen0r",tier:"B",score:200,region:"AS"},
+{username:"Tiktok RAZZA",tier:"C",score:150,region:"EU"},
+{username:"Godarush007",tier:"D",score:100,region:"AS"},
+...Array.from({length:14},()=>({username:"None",tier:"N/A",score:0,region:""}))
+]
+}
+
+function sortLeaderboard(list){
+return [...list]
+.sort((a,b)=>b.score-a.score)
+.map((p,i)=>({...p,rank:i+1}))
+}
 
 function getRankTitle(s){
 if(s>=1500)return"Combat Grandmaster"
@@ -200,96 +258,84 @@ if(r===3)return"r3"
 return""
 }
 
-const leaderboardData={
-mace:[
-{rank:1,username:"ItsCavell",tier:"S+",score:450,region:"EU"},
-{rank:2,username:"Death777gt1",tier:"S+",score:400,region:"SA"},
-{rank:3,username:"ao2020oa",tier:"S",score:350,region:"EU"},
-{rank:4,username:"ItzAdaptMC",tier:"A+",score:300,region:"EU"},
-{rank:5,username:"xylen0r",tier:"A",score:250,region:"AS"},
-{rank:6,username:"SordidParrot832",tier:"A",score:250,region:"AS"},
-{rank:7,username:"Tiktok RAZZA",tier:"A",score:250,region:"EU"},
-{rank:8,username:"lifeanddeath197",tier:"D",score:100,region:"AS"},
-...Array.from({length:12},(_,i)=>({rank:i+9,username:"None",tier:"N/A",score:0,region:""}))
-],
-crystal:[
-{rank:1,username:"ItsCavell",tier:"S+",score:400,region:"EU"},
-{rank:2,username:"SordidParrot832",tier:"C",score:150,region:"AS"},
-{rank:3,username:"Tiktok RAZZA",tier:"C",score:150,region:"EU"},
-...Array.from({length:17},(_,i)=>({rank:i+4,username:"None",tier:"N/A",score:0,region:""}))
-],
-cart:[
-{rank:1,username:"ItsCavell",tier:"S+",score:400,region:"EU"},
-...Array.from({length:20},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0,region:""}))
-],
-uhc:[
-{rank:1,username:"ItsCavell",tier:"S+",score:400,region:"EU"},
-{rank:2,username:"SordidParrot832",tier:"B",score:200,region:"AS"},
-...Array.from({length:18},(_,i)=>({rank:i+3,username:"None",tier:"N/A",score:0,region:""}))
-],
-sword:[
-{rank:1,username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
-{rank:2,username:"xylen0r",tier:"C",score:150,region:"AS"},
-...Array.from({length:18},(_,i)=>({rank:i+3,username:"None",tier:"N/A",score:0,region:""}))
-],
-axe:[
-{rank:1,username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
-{rank:2,username:"ItsCavell",tier:"B",score:200,region:"EU"},
-...Array.from({length:18},(_,i)=>({rank:i+3,username:"None",tier:"N/A",score:0,region:""}))
-],
-dia:[
-{rank:1,username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
-...Array.from({length:19},(_,i)=>({rank:i+2,username:"None",tier:"N/A",score:0,region:""}))
-],
-smp:[
-{rank:1,username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
-{rank:2,username:"ItsCavell",tier:"S",score:350,region:"EU"},
-{rank:3,username:"Death777gt1",tier:"A+",score:300,region:"SA"},
-{rank:4,username:"Tiktok RAZZA",tier:"C",score:150,region:"EU"},
-{rank:5,username:"xylen0r",tier:"B",score:200,region:"AS"},
-{rank:6,username:"Godarush007",tier:"D",score:100,region:"AS"},
-...Array.from({length:14},(_,i)=>({rank:i+7,username:"None",tier:"N/A",score:0,region:""}))
-]
-}
-
 function getAllPlayers(){
 const map={}
+
 Object.keys(leaderboardData).forEach(mode=>{
-leaderboardData[mode].forEach(p=>{
+sortLeaderboard(leaderboardData[mode]).forEach(p=>{
 if(p.username==="None")return
-if(!map[p.username])map[p.username]={username:p.username,region:p.region,score:0,tiers:[]}
+
+if(!map[p.username]){
+map[p.username]={
+username:p.username,
+region:p.region,
+score:0,
+tiers:[]
+}
+}
+
 map[p.username].score+=p.score
-map[p.username].tiers.push({mode,tier:p.tier})
+map[p.username].tiers.push({
+mode,
+tier:p.tier
 })
 })
-return Object.values(map).sort((a,b)=>b.score-a.score).map((p,i)=>({...p,rank:i+1}))
+})
+
+return Object.values(map)
+.sort((a,b)=>b.score-a.score)
+.map((p,i)=>({...p,rank:i+1}))
 }
 
 function render(mode){
 listEl.innerHTML=""
-let list=mode==="overall"?getAllPlayers():leaderboardData[mode]
+
+let list
+
+if(mode==="overall"){
+list=getAllPlayers()
+}else{
+list=sortLeaderboard(leaderboardData[mode])
+}
 
 list.forEach(p=>{
+
 const row=document.createElement("div")
 row.className="row "+rankStyle(p.rank)
 row.onclick=()=>openModal(p)
 
 const tiers=mode==="overall"
-?p.tiers.map(t=>`<div class="t ${tierClass(t.tier)}">${t.tier}</div>`).join("")
-:`<div class="t ${tierClass(p.tier)}">${p.tier}</div>`
+?p.tiers.map(t=>`
+<div class="t ${tierClass(t.tier)}">${t.tier}</div>
+`).join("")
+:`
+<div class="t ${tierClass(p.tier)}">${p.tier}</div>
+`
 
 row.innerHTML=`
 <div class="rankNum">${p.rank}.</div>
+
 <div class="player">
-<img src="https://mc-heads.net/avatar/Steve">
+<img src="https://mc-heads.net/avatar/${p.username}">
 <div>
 <div>${p.username}</div>
-${mode==="overall"?`<div class="sub">${getRankTitle(p.score)} (${p.score})</div>`:""}
+${mode==="overall"
+?`<div class="sub">${getRankTitle(p.score)} (${p.score})</div>`
+:""}
 </div>
 </div>
-<div><span class="region ${p.region||'default'}">${p.region||'-'}</span></div>
-<div class="tiers">${tiers}</div>
+
+<div>
+<span class="region ${p.region||'default'}">
+${p.region||'-'}
+</span>
+</div>
+
+<div class="tiers">
+${tiers}
+</div>
 `
+
 listEl.appendChild(row)
 })
 }
@@ -298,44 +344,75 @@ function openModal(p){
 modal.style.display="flex"
 
 let tiers=[]
+
 Object.keys(leaderboardData).forEach(mode=>{
 const f=leaderboardData[mode].find(x=>x.username===p.username)
+
 if(f && f.username!=="None"){
-tiers.push({mode,tier:f.tier})
+tiers.push({
+mode,
+tier:f.tier
+})
 }
 })
 
 modalBox.innerHTML=`
 <div style="text-align:right;cursor:pointer" onclick="closeModal()">✕</div>
+
 <div class="big">${p.username}</div>
-<div class="rankTitle">${getRankTitle(p.score)}</div>
-<img src="https://mc-heads.net/avatar/Steve">
-<div>#${p.rank} (${p.score} points)</div>
+
+<div class="rankTitle">
+${getRankTitle(p.score)}
+</div>
+
+<img src="https://mc-heads.net/avatar/${p.username}">
+
+<div>
+#${p.rank} (${p.score} points)
+</div>
 
 <div class="tierRow">
 ${tiers.map(t=>`
 <div style="text-align:center">
-<div class="t ${tierClass(t.tier)}">${t.tier}</div>
-<div style="font-size:10px;color:#9ca3af;margin-top:2px">${t.mode}</div>
+<div class="t ${tierClass(t.tier)}">
+${t.tier}
+</div>
+
+<div style="font-size:10px;color:#9ca3af;margin-top:2px">
+${t.mode}
+</div>
 </div>
 `).join("")}
 </div>
 `
 }
 
-function closeModal(){modal.style.display="none"}
+function closeModal(){
+modal.style.display="none"
+}
 
 function setMode(m,e){
-document.querySelectorAll(".mode").forEach(x=>x.classList.remove("active"))
+document.querySelectorAll(".mode").forEach(x=>{
+x.classList.remove("active")
+})
+
 e.classList.add("active")
+
 render(m)
 }
 
 function searchPlayer(name){
 if(!name)return
+
 const players=getAllPlayers()
-const found=players.find(p=>p.username.toLowerCase()===name.toLowerCase())
-if(found)openModal(found)
+
+const found=players.find(p=>
+p.username.toLowerCase()===name.toLowerCase()
+)
+
+if(found){
+openModal(found)
+}
 }
 
 render("overall")
