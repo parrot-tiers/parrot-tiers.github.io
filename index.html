@@ -166,6 +166,15 @@ z-index:9999;
 </div>
 
 <script>
+const listEl=document.getElementById("list")
+const modal=document.getElementById("modal")
+const modalBox=document.getElementById("modalBox")
+const search=document.querySelector(".search")
+
+search.addEventListener("keydown",e=>{
+if(e.key==="Enter")searchPlayer(search.value)
+})
+  
 const filler10=Array.from({length:10},()=>({username:"None",tier:"N/A",score:0,region:""}))
 const filler14=Array.from({length:14},()=>({username:"None",tier:"N/A",score:0,region:""}))
 const filler17=Array.from({length:17},()=>({username:"None",tier:"N/A",score:0,region:""}))
