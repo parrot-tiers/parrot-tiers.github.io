@@ -166,7 +166,14 @@ z-index:9999;
 </div>
 
 <script>
+const filler10=Array.from({length:10},()=>({username:"None",tier:"N/A",score:0,region:""}))
+const filler14=Array.from({length:14},()=>({username:"None",tier:"N/A",score:0,region:""}))
+const filler17=Array.from({length:17},()=>({username:"None",tier:"N/A",score:0,region:""}))
+const filler18=Array.from({length:18},()=>({username:"None",tier:"N/A",score:0,region:""}))
+const filler19=Array.from({length:19},()=>({username:"None",tier:"N/A",score:0,region:""}))
+
 const leaderboardData={
+
 mace:[
 {username:"ItsCavell",tier:"S+",score:450,region:"EU"},
 {username:"Death777gt1",tier:"S+",score:400,region:"SA"},
@@ -178,42 +185,42 @@ mace:[
 {username:"lifeanddeath197",tier:"D",score:100,region:"AS"},
 {username:"monke2461",tier:"S",score:350,region:"AS"},
 {username:"Firefox099179",tier:"S",score:350,region:"EU"},
-...Array.from({length:10},()=>({username:"None",tier:"N/A",score:0,region:""}))
+...filler10
 ],
 
 crystal:[
 {username:"ItsCavell",tier:"S+",score:400,region:"EU"},
 {username:"SordidParrot832",tier:"C",score:150,region:"AS"},
 {username:"Tiktok RAZZA",tier:"C",score:150,region:"EU"},
-...Array.from({length:17},()=>({username:"None",tier:"N/A",score:0,region:""}))
+...filler17
 ],
 
 cart:[
 {username:"ItsCavell",tier:"S+",score:400,region:"EU"},
-...Array.from({length:19},()=>({username:"None",tier:"N/A",score:0,region:""}))
+...filler19
 ],
 
 uhc:[
 {username:"ItsCavell",tier:"S+",score:400,region:"EU"},
 {username:"SordidParrot832",tier:"B",score:200,region:"AS"},
-...Array.from({length:18},()=>({username:"None",tier:"N/A",score:0,region:""}))
+...filler18
 ],
 
 sword:[
 {username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
 {username:"xylen0r",tier:"C",score:150,region:"AS"},
-...Array.from({length:18},()=>({username:"None",tier:"N/A",score:0,region:""}))
+...filler18
 ],
 
 axe:[
 {username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
 {username:"ItsCavell",tier:"B",score:200,region:"EU"},
-...Array.from({length:18},()=>({username:"None",tier:"N/A",score:0,region:""}))
+...filler18
 ],
 
 dia:[
 {username:"SordidParrot832",tier:"S+",score:400,region:"AS"},
-...Array.from({length:19},()=>({username:"None",tier:"N/A",score:0,region:""}))
+...filler19
 ],
 
 smp:[
@@ -223,10 +230,10 @@ smp:[
 {username:"xylen0r",tier:"B",score:200,region:"AS"},
 {username:"Tiktok RAZZA",tier:"C",score:150,region:"EU"},
 {username:"Godarush007",tier:"D",score:100,region:"AS"},
-...Array.from({length:14},()=>({username:"None",tier:"N/A",score:0,region:""}))
+...filler14
 ]
 }
-
+  
 function sortLeaderboard(list){
 return [...list]
 .sort((a,b)=>b.score-a.score)
